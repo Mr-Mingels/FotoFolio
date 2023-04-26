@@ -1,11 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
+import './App.css'
+import { BrowserRouter, Routes, Route, useLocation, useNavigate } from "react-router-dom";
+import React, { lazy, Suspense  } from "react";
+import NavBar from './components/NavBar';
 
-function App() {
+const Home = lazy(() => import('./components/Home'));
+
+const App = () => {  
+
   return (
-    <div className="App">
+    <Suspense fallback={<div className="loader-wrapper">
+    <span className="loader"><span className="loader-inner"></span></span>
+</div>}>
+      <Home />
+    </Suspense>
+  );
+}
+
+const Root = () => {
+
+  return (
+    <div>
+        <NavBar />
+        <App />
     </div>
   );
 }
 
-export default App;
+export default Root;

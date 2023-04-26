@@ -1,0 +1,77 @@
+import React, { useEffect, useState } from "react";
+import '../styles/NavBar.css'
+
+const NavBar = () => {
+
+    const [searchInput, setSearchInput] = useState('')
+
+    const resetSearchInput = () => {
+        setSearchInput('')
+    }
+
+/*    const handleLikedImagesBtnHoverOn = (event) => {
+        const likedHeartIconImg = event.currentTarget.querySelector(".likedHeartIconImg");
+        likedHeartIconImg.style.setProperty("--toggle-icon-color", "black");
+        
+        const likedImagesBtn = event.target.closest(".likedImagesBtn")
+        likedImagesBtn.style.setProperty("--toggle-color", "black")
+    }
+    
+    const handleLikedImagesBtnHoverOff = (event) => {
+        const likedHeartIconImg = event.currentTarget.querySelector(".likedHeartIconImg");
+        likedHeartIconImg.style.setProperty("--toggle-icon-color", "#c2c2c2");
+
+        const likedImagesBtn = event.target.closest(".likedImagesBtn")
+        likedImagesBtn.style.setProperty("--toggle-color", "#767676")
+    } */
+    
+
+    return (
+        <nav className="navBarWrapper">
+            <div className="navBarContent">
+                <div className="topNavSection">
+                    <h1 className="navTitle">Foto-F</h1>
+                    <form className="searchInputWrapper" onSubmit={(event) => event.preventDefault()}>
+                        <div className="searchIconWrapper">
+                            <svg className="searchIcon" viewBox="0 0 24 24" version="1.1" aria-hidden="false">
+                            <desc lang="en-US">A magnifying glass</desc><path d="M16.5 15c.9-1.2 1.5-2.8 1.5-4.5C18 6.4 14.6 3 10.5 
+                            3S3 6.4 3 10.5 6.4 18 10.5 18c1.7 0 3.2-.5 4.5-1.5l4.6 4.5 1.4-1.5-4.5-4.5zm-6 1c-3 0-5.5-2.5-5.5-5.5S7.5 
+                            5 10.5 5 16 7.5 16 10.5 13.5 16 10.5 16z"></path></svg>
+                        </div>
+                        <input placeholder="Search high-resolution images" className="searchInput" value={searchInput}
+                        onChange={(event) => setSearchInput(event.target.value)}></input>
+                        <div className='heroImgResetSearchInputBtnWrapper'>
+                            {searchInput && (
+                                <button className='heroImgResetSearchInputBtn' onClick={resetSearchInput}>
+                                    <svg className='heroImgClearBtn' viewBox="0 0 24 24" version="1.1" aria-hidden="false"><desc lang="en-US">An X shape</desc>
+                                    <path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 
+                                    13.41 12 19 6.41Z"></path></svg>
+                                </button>
+                            )}
+                        </div>
+                    </form>
+                    <div className="bottomNavSectionBtnWrapper">
+                        <span>Home</span>
+                    </div>
+                    <div className="bottomNavSectionBtnWrapper">
+                        <span>Liked Images</span>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    )
+}
+
+export default NavBar
+
+ /*<div className="likedImagesBtnWrapper">
+                        <button className="likedImagesBtn" style={{ color: "var(--toggle-color)" }} 
+                        onMouseEnter={(event) => handleLikedImagesBtnHoverOn(event)}
+                        onMouseLeave={(event) => handleLikedImagesBtnHoverOff(event)}><svg className="likedHeartIconImg" 
+                        viewBox="0 0 24 24" version="1.1" aria-hidden="false" style={{ fill: "var(--toggle-icon-color)" }}>
+                            <desc lang="en-US">A heart</desc><path d="M21.424 4.594c-2.101-2.125-5.603-2.125-7.804 0l-1.601 
+                            1.619-1.601-1.62c-2.101-2.124-5.603-2.124-7.804 0-2.202 2.126-2.102 5.668 0 7.894L12.019 22l9.405-9.513a5.73 
+                            5.73 0 0 0 0-7.893Z"></path></svg>
+                            Liked Images</button>
+                    </div>
+                </div> */

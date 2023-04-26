@@ -1,0 +1,56 @@
+const express = require('express');
+const axios = require('axios');
+const dotenv = require('dotenv');
+const cors = require('cors');
+const bodyParser = require('body-parser')
+
+dotenv.config();
+
+const app = express();
+app.use(cors({ origin: 'http://localhost:3000' }));
+app.use(bodyParser.json())
+
+const PORT = process.env.PORT || 3001;
+
+const PIXABAY_API_KEY = process.env.PIXABAY_API_KEY;
+const PIXABAY_API_BASE_URL = 'https://pixabay.com/api';
+
+const cache = {}; // Simple in-memory cache
+const cacheExpiration = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
+
+app.get('/api/search', async (req, res) => {
+  try {
+    const query = req.query.q;
+
+    // If cache exists and is not expired, return cached response
+    if (cache[query] && (Date.now() - cache[query].timestamp) < cacheExpiration) {
+      res.json(cache[query].data);
+      return;
+    }
+
+    const response = await axios.get(PIXABAY_API_BASE_URL, {
+      params: {
+        key: PIXABAY_API_KEY,
+        q: query,
+        image_type: 'photo',
+        per_page: 50,
+      },
+    });
+
+    // Store response in cache with a timestamp
+    cache[query] = {
+      data: response.data,
+      timestamp: Date.now(),
+    };
+
+    res.json(response.data);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'An error occurred' });
+  }
+});
+
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+  console.log(PIXABAY_API_KEY)
+});

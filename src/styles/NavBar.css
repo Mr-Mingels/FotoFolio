@@ -1,0 +1,128 @@
+.navBarWrapper {
+    width: 100%;
+    background-color: white;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 50;
+}
+
+.navBarContent {
+    padding: 11px 20px;
+    height: 70px;
+    display: flex;
+    align-items: center;
+}
+
+.topNavSection {
+    display: flex;
+    height: 100%;
+    align-items: center;
+    gap: 24px;
+    
+}
+
+.navTitle {
+    cursor: pointer;
+}
+
+.searchInputWrapper {
+    border: 1px solid #0000;
+    border-radius: 24px;
+    height: 40px;
+    background-color: #eee;
+    display: flex;
+    width: 897px;
+}
+
+.searchIconWrapper {
+    display: flex;
+    align-items: center;    
+    width: 4%;
+    cursor: pointer;
+}
+
+.searchIcon {
+    height: 20px;
+    width: 20px;
+    padding-left: 14px;
+    fill: #767676;
+    box-sizing: initial;
+    transition: fill .1s ease-in-out;
+}
+
+.searchInput {
+    border: none;
+    font-size: 14px;
+    background-color: transparent;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    outline: none;
+    font-weight: 700;
+    width: 96%;
+    color: #111;
+    padding-left: 10px;
+}
+
+.bottomNavSectionBtnWrapper {
+    font-size: 14px;
+    color: #767676;
+    transition: all .1s ease-in-out;
+    cursor: pointer;
+}
+
+.bottomNavSectionBtnWrapper:hover {
+    color: black;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+.likedImagesBtnWrapper {
+    margin-left: auto;
+    margin-right: 20px;
+}
+
+.likedImagesBtn {
+    width: fit-content;
+    padding: 5px 10px;
+    background-color: transparent;
+    display: flex;
+    align-items: center;
+    border: none;
+    height: 38px;
+    --toggle-color: #767676;
+    transition: all .1s ease-in-out;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.likedHeartIconImg {
+    --toggle-icon-color: #c2c2c2;
+    height: 20px;
+    margin-right: 8px;
+    transition: fill .1s ease-in-out;
+    width: 20px;
+}
+*/
