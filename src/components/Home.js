@@ -1,13 +1,16 @@
 import heroImg from '../assets/heroImg.jpg'
 import '../styles/Home.css'
 import {  } from "react-router-dom";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import Masonry from 'react-masonry-css';
 
 const Home = () => {
     const [searchInput, setSearchInput] = useState('')
     const [isLoading, setIsLoading] = useState(true)
     const [images, setImages] = useState([]);
+    const [page, setPage] = useState(1);
+
+    const loader = useRef(null);
 
     const resetSearchInput = () => {
         setSearchInput('')
@@ -17,29 +20,44 @@ const Home = () => {
         setIsLoading(false)
     }
 
-    const fetchImages = async () => {
+    const fetchImages = async (page) => {
         try {
-          const response = await fetch('http://localhost:3001/api/search');
+          const response = await fetch(`http://localhost:3001/api/search?page=${page}`);
           const data = await response.json();
       
-          console.log(data)
-          setImages(data.hits);
+          console.log(data);
+          setImages((prevImages) => [...prevImages, ...data.hits]);
         } catch (error) {
-          console.error('Error fetching popular images:', error);
+          console.error("Error fetching popular images:", error);
         }
       };
-      
-      const handleImageLoad = (event, index) => {
-        const img = event.target;
-        const newImages = [...images];
-        newImages[index].width = img.width;
-        newImages[index].height = img.height;
-        setImages(newImages);
+
+    useEffect(() => {
+        fetchImages(page);
+      }, [page]);
+
+
+    useEffect(() => {
+    const observer = new IntersectionObserver(
+        (entries) => {
+        if (entries[0].isIntersecting) {
+            setPage((prevPage) => prevPage + 1);
+        }
+        },
+        { threshold: 1 }
+    );
+
+    if (loader.current) {
+        observer.observe(loader.current);
     }
 
-      useEffect(() => {
-        fetchImages();
-      }, []);
+    return () => {
+        if (loader.current) {
+        observer.unobserve(loader.current);
+        }
+    };
+    }, [loader]);
+
       
       
 
@@ -94,6 +112,7 @@ const Home = () => {
                         </div>
                     ))}
                     </Masonry>
+                    <div ref={loader} style={{ height: "1px", marginTop: "-1px" }}></div>
             </div>
         </div>
     )

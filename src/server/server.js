@@ -21,10 +21,13 @@ const cacheExpiration = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
 app.get('/api/search', async (req, res) => {
   try {
     const query = req.query.q;
+    const page = req.query.page;
+
+    const cacheKey = `${query}_${page}`;
 
     // If cache exists and is not expired, return cached response
-    if (cache[query] && (Date.now() - cache[query].timestamp) < cacheExpiration) {
-      res.json(cache[query].data);
+    if (cache[cacheKey] && (Date.now() - cache[cacheKey].timestamp) < cacheExpiration) {
+      res.json(cache[cacheKey].data);
       return;
     }
 
@@ -32,13 +35,14 @@ app.get('/api/search', async (req, res) => {
       params: {
         key: PIXABAY_API_KEY,
         q: query,
-        image_type: 'photo',
+        image_type: "photo",
         per_page: 50,
+        page: req.query.page,
       },
     });
 
     // Store response in cache with a timestamp
-    cache[query] = {
+    cache[cacheKey] = {
       data: response.data,
       timestamp: Date.now(),
     };
@@ -49,6 +53,7 @@ app.get('/api/search', async (req, res) => {
     res.status(500).json({ message: 'An error occurred' });
   }
 });
+
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
