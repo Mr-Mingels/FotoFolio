@@ -56,22 +56,21 @@
     border: none;
     font-size: 14px;
     background-color: transparent;
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     outline: none;
-    font-weight: 700;
     width: 96%;
     color: #111;
     padding-left: 10px;
 }
 
-.bottomNavSectionBtnWrapper {
+.bottomNavSectionBtnWrapper, .navLinkWrapper {
     font-size: 14px;
     color: #767676;
     transition: all .1s ease-in-out;
     cursor: pointer;
+    text-decoration: none;
 }
 
-.bottomNavSectionBtnWrapper:hover {
+.bottomNavSectionBtnWrapper:hover, .navLinkWrapper:hover {
     color: black;
 }
 

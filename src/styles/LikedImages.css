@@ -1,0 +1,121 @@
+.likedImagesWrapper {
+    min-height: 100vh;
+    padding-top: 70px;
+}
+
+.likedImagesHeader {
+    margin-top: 20px;
+    height: 70px;
+    width: 100%;
+    padding: 0 55px; 
+    border-bottom: 1px solid rgba(83, 83, 83, 0.3);
+    display: flex;
+    align-items: flex-end;
+}
+
+.likedImagesContentWrapper {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    gap: 32px;
+    width: 100%;
+}
+
+.likedImagesHeaderTxtWrapper {
+    --toggle-icon-color: #c2c2c2;
+    font-size: 14px;
+    height: 56px;
+    color: #767676;
+    transition: color .1s ease-in-out;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.likedImagesHeaderTxtWrapper:hover {
+    color: black;
+}
+
+.likedHeartIconImg {
+    height: 18px;
+    margin-right: 8px;
+    transition: fill .1s ease-in-out;
+    width: 18px;
+}
+
+.numberOfLikedImages {
+    margin-left: 8px;
+}
+
+.likedImgSearchFormWrapper {
+    border: 1px solid #0000;
+    border-radius: 4px;
+    height: 40px;
+    background-color: #eee;
+    display: flex;
+    height: 40px;
+    width: 400px;
+}
+
+.likedImgSearchIconWrapper {
+    display: flex;
+    align-items: center;    
+    width: 9%;
+    cursor: pointer;
+}
+
+.likedImgSearchIcon {
+    height: 20px;
+    width: 20px;
+    padding-left: 14px;
+    fill: #767676;
+    box-sizing: initial;
+    transition: fill .1s ease-in-out;
+}
+
+.likedImgSearchInput {
+    border: none;
+    font-size: 14px;
+    background-color: transparent;
+    outline: none;
+    width: 80%;
+    color: #111;
+    padding-left: 10px;
+}
+
+.likedImgResetSearchInputBtnWrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 11%;
+}
+
+.likedImgResetSearchInputBtn {
+    width: 100%;
+    height: 100%;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    fill: #767676;
+    transition: fill .1s ease-in-out;
+}
+
+.likedImgResetSearchInputBtn:hover {
+    fill: black !important;
+}
+
+.likedImgClearBtn {
+    margin-top: 2px;
+    width: 20px;
+    height: 20px;
+    box-sizing: initial;
+}
+
+
+/* RENDERED IMAGES RENDERED IMAGES RENDERED IMAGES RENDERED IMAGES RENDERED IMAGES RENDERED IMAGES RENDERED IMAGES RENDERED IMAGES*/
+
+.renderedLikedImagesWrapper {
+    padding: 48px 120px;
+}
+

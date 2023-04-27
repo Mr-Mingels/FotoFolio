@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import '../styles/NavBar.css'
+import { Link } from 'react-router-dom';
 
 const NavBar = () => {
 
@@ -51,10 +52,10 @@ const NavBar = () => {
                         </div>
                     </form>
                     <div className="bottomNavSectionBtnWrapper">
-                        <span>Home</span>
+                        <Link className="navLinkWrapper" to='/'><span>Home</span></Link>
                     </div>
                     <div className="bottomNavSectionBtnWrapper">
-                        <span>Liked Images</span>
+                    <Link className="navLinkWrapper" to='/collections'><span>Liked Images</span></Link>
                     </div>
                 </div>
             </div>

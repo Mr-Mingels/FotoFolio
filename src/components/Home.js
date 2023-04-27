@@ -1,14 +1,31 @@
 import heroImg from '../assets/heroImg.jpg'
+import like from '../assets/like.png'
+import download from '../assets/download.png'
 import '../styles/Home.css'
 import {  } from "react-router-dom";
-import React, { useEffect, useState, useRef } from "react";
-import Masonry from 'react-masonry-css';
+import React, { useEffect, useState, useRef, useCallback } from "react";
+import { Link } from 'react-router-dom';
 
 const Home = () => {
     const [searchInput, setSearchInput] = useState('')
     const [isLoading, setIsLoading] = useState(true)
-    const [images, setImages] = useState([]);
-    const [page, setPage] = useState(1);
+    const [loadingMoreImages, setLoadingMoreImages] = useState(false);
+    const [page, setPage] = useState(0);
+    const [allImages, setAllImages] = useState([[], [], []]);
+    const [downloadDisabled, setDownloadDisabled] = useState(false);
+    const [likedImages, setLikedImages] = useState([])
+
+
+    const handleHoverOn = (event) => {
+        const homeImageBoxWrapper = event.target.closest(".homeImageBoxWrapper")
+        homeImageBoxWrapper.style.setProperty("--toggle-opacity", "1")
+    }
+
+    const handleHoverOff = (event) => {
+        const homeImageBoxWrapper = event.target.closest(".homeImageBoxWrapper")
+        homeImageBoxWrapper.style.setProperty("--toggle-opacity", "0")
+    }
+
 
     const loader = useRef(null);
 
@@ -21,26 +38,60 @@ const Home = () => {
     }
 
     const fetchImages = async (page) => {
+        if(!page || page >= 18) return
+        console.log('fetching')
         try {
           const response = await fetch(`http://localhost:3001/api/search?page=${page}`);
           const data = await response.json();
+
+          console.log(data)
       
-          console.log(data);
-          setImages((prevImages) => [...prevImages, ...data.hits]);
+          const newImages = data.hits.reduce(
+            (columns, image, index) => {
+              columns[index % 3].push(image);
+              return columns;
+            },
+            [[], [], []]
+          );
+
+          const removeDuplicates = (prev, current) => {
+            const combined = [...prev, ...current];
+            return combined.filter(
+              (image, index, self) =>
+                index === self.findIndex((t) => t.webformatURL === image.webformatURL)
+            );
+          };
+
+
+          setAllImages((prevImages) => {
+            return [
+                removeDuplicates(prevImages[0], newImages[0]),
+                removeDuplicates(prevImages[1], newImages[1]),
+                removeDuplicates(prevImages[2], newImages[2]),
+            ];
+            });
         } catch (error) {
           console.error("Error fetching popular images:", error);
         }
       };
+      
+      
 
-    useEffect(() => {
-        fetchImages(page);
+      useEffect(() => {
+        if (!loadingMoreImages) {
+            console.log('gigigty goo')
+          setLoadingMoreImages(true);
+          fetchImages(page);
+        }
       }, [page]);
+      
 
 
     useEffect(() => {
+        if (page >= 18) return
     const observer = new IntersectionObserver(
         (entries) => {
-        if (entries[0].isIntersecting) {
+        if (entries[0].isIntersecting && !loadingMoreImages) {
             setPage((prevPage) => prevPage + 1);
         }
         },
@@ -58,11 +109,78 @@ const Home = () => {
     };
     }, [loader]);
 
+    useEffect(() => {
+        if (loadingMoreImages) {
+          const timer = setTimeout(() => {
+            setLoadingMoreImages(false);
+            fetchImages(page + 1)
+            console.log('set');
+          }, 2500);
+      
+          return () => {
+            clearTimeout(timer);
+          };
+        }
+      }, [loadingMoreImages]);
       
       
+      useEffect(() => {
+        console.log(allImages)
+        console.log(allImages[0].length)
+        console.log(allImages[1].length)
+        console.log(allImages[2].length)
+      },[allImages])
+
+
+      const downLoadImage = async (url) => {
+        if (downloadDisabled) return;
+      
+        setDownloadDisabled(true);
+        setTimeout(() => setDownloadDisabled(false), 3000); // Disable the button for 3 seconds
+      
+        try {
+          const response = await fetch(url);
+          const blob = await response.blob();
+          const fileName = url.split('/').pop().split('.')[0] + '.jpg';
+      
+          const link = document.createElement("a");
+          link.download = fileName;
+          link.href = URL.createObjectURL(blob);
+          link.click();
+          URL.revokeObjectURL(link.href);
+        } catch (error) {
+          console.error("Error downloading image:", error);
+        }
+      };
+      
+      const likeImage = (imageUrl) => {
+        setLikedImages([...likedImages, imageUrl])
+      }
+
+      const unLikedImage = (imageUrl) => {
+        setLikedImages((prevLikedImages) => {
+            return prevLikedImages.filter((likedImageUrl) => likedImageUrl !== imageUrl);
+        });
+    };
+    
+      
+      const isImageLiked = useCallback(
+        (imageUrl) => {
+            console.log('checked')
+            if (likedImages.includes(imageUrl)) {
+                console.log('true')
+            }
+          return likedImages.includes(imageUrl);
+        },
+        [likedImages]
+      );
+      
+      useEffect(() => {
+        console.log(likedImages)
+      },[likedImages])
 
     return (
-        <div className="homeWrapper">
+        <section className="homeWrapper">
             {isLoading &&(
                 <div className="loader-wrapper">
                     <span className="loader"><span className="loader-inner"></span></span>
@@ -100,21 +218,92 @@ const Home = () => {
                     <span>Photo by <a className='heroImgLink' href='https://unsplash.com/@pinewatt'>Pine Watt</a></span>
                 </div>
             </div>
-            <div className='homeImagesResultsWrapper'>
-                <Masonry
-                    breakpointCols={{ default: 3, 1100: 2, 700: 1 }}
-                    className='masonry-grid'
-                    columnClassName='masonry-grid_column'
-                    >
-                    {images.map((image, index) => (
-                        <div className='homeImageBoxWrapper' key={index}>
-                        <img className='homeImage' src={image.webformatURL} />
-                        </div>
-                    ))}
-                    </Masonry>
+            <div className="homeImagesResultsWrapper">
+                <div className='homeImagesResultsContent'>
+                    <div className="homeImagesResultsColumnContent">
+                            {allImages[0].map((image, index) => (
+                                <div className="homeImageBoxWrapper" key={index} onMouseEnter={(event) => handleHoverOn(event)}
+                                onMouseLeave={(event) => handleHoverOff(event)}>
+                                    <img className="homeImage" src={image.webformatURL} />
+                                    <div className='homeImageBoxBtnWrapper' style={{ opacity: "var(--toggle-opacity)"}}>
+                                        <button className='homeDownLoadBtn'disabled={downloadDisabled} 
+                                        onClick={() => downLoadImage(image.webformatURL)}
+                                        ><img className='homeDownLoadImg' src={download} /></button>
+                                        {isImageLiked(image.webformatURL) ? (
+                                            <button className='homeLikeImgBtn liked' onClick={() => unLikedImage(image.webformatURL)}>
+                                                <img className='homeLikeImg liked' src={like} />
+                                            </button>
+                                        ) : (
+                                            <button className='homeLikeImgBtn' onClick={() => likeImage(image.webformatURL)}>
+                                                <img className='homeLikeImg' src={like} />
+                                            </button>
+                                        )}
+                                    </div>
+                                    <div className='homeImgBoxTagsWrapper' style={{ opacity: "var(--toggle-opacity)"}}>
+                                        <span className='homeImgTagsTxt'>{image.tags}</span>
+                                    </div>
+                                </div>
+                                ))}
+                            </div>
+                            <div className="homeImagesResultsColumnContent">
+                            {allImages[1].map((image, index) => (
+                                <div className="homeImageBoxWrapper" key={index} onMouseEnter={(event) => handleHoverOn(event)}
+                                onMouseLeave={(event) => handleHoverOff(event)}>
+                                    <img className="homeImage" src={image.webformatURL} />
+                                    <div className='homeImageBoxBtnWrapper' style={{ opacity: "var(--toggle-opacity)"}}>
+                                        <button className='homeDownLoadBtn' disabled={downloadDisabled} 
+                                        onClick={() => downLoadImage(image.webformatURL)}
+                                        ><img className='homeDownLoadImg' src={download} /></button>
+                                        {isImageLiked(image.webformatURL) ? (
+                                            <button className='homeLikeImgBtn liked' onClick={() => unLikedImage(image.webformatURL)}>
+                                                <img className='homeLikeImg liked' src={like} />
+                                            </button>
+                                        ) : (
+                                            <button className='homeLikeImgBtn' onClick={() => likeImage(image.webformatURL)}>
+                                                <img className='homeLikeImg' src={like} />
+                                            </button>
+                                        )}
+                                    </div>
+                                    <div className='homeImgBoxTagsWrapper' style={{ opacity: "var(--toggle-opacity)"}}>
+                                        <span className='homeImgTagsTxt'>{image.tags}</span>
+                                    </div>
+                                </div>
+                                ))}
+                            </div>
+                            <div className="homeImagesResultsColumnContent">
+                            {allImages[2].map((image, index) => (
+                                <div className="homeImageBoxWrapper" key={index} onMouseEnter={(event) => handleHoverOn(event)}
+                                onMouseLeave={(event) => handleHoverOff(event)}>
+                                    <img className="homeImage" src={image.webformatURL} />
+                                    <div className='homeImageBoxBtnWrapper' style={{ opacity: "var(--toggle-opacity)"}}>
+                                        <button className='homeDownLoadBtn' disabled={downloadDisabled} 
+                                        onClick={() => downLoadImage(image.webformatURL)}>
+                                            <img className='homeDownLoadImg' src={download} /></button>
+                                            {isImageLiked(image.webformatURL) ? (
+                                            <button className='homeLikeImgBtn liked' onClick={() => unLikedImage(image.webformatURL)}>
+                                                <img className='homeLikeImg liked' src={like} />
+                                            </button>
+                                        ) : (
+                                            <button className='homeLikeImgBtn' onClick={() => likeImage(image.webformatURL)}>
+                                                <img className='homeLikeImg' src={like} />
+                                            </button>
+                                        )}
+                                    </div>
+                                    <div className='homeImgBoxTagsWrapper' style={{ opacity: "var(--toggle-opacity)"}}>
+                                        <span className='homeImgTagsTxt'>{image.tags}</span>
+                                    </div>
+                                </div>
+                                ))}
+                            </div>
                     <div ref={loader} style={{ height: "1px", marginTop: "-1px" }}></div>
+                </div>
+                {loadingMoreImages && (
+                            <div className="bottom-loader-wrapper">
+                                <div className="bottom-loader"></div>
+                            </div>
+                            )}
             </div>
-        </div>
+        </section>
     )
 }
 

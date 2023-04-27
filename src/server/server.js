@@ -36,7 +36,7 @@ app.get('/api/search', async (req, res) => {
         key: PIXABAY_API_KEY,
         q: query,
         image_type: "photo",
-        per_page: 50,
+        per_page: 30,
         page: req.query.page,
       },
     });
