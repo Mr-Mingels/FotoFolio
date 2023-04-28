@@ -1,14 +1,41 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import '../styles/LikedImages.css'
 import { Link } from 'react-router-dom';
+import like from '../assets/like.png'
+import download from '../assets/download.png'
 
-const LikedImages = () => {
+const LikedImages = ({ likedImagesArray, getLikedImages }) => {
 
     const [likedImages, setLikedImages] = useState([])
+    const [isLoading, setIsLoading] = useState(true)
     const [searchInput, setSearchInput] = useState('')
+    const [column1Images, setColumn1Images] = useState([]);
+    const [column2Images, setColumn2Images] = useState([]);
+    const [column3Images, setColumn3Images] = useState([]);
+    const [downloadDisabled, setDownloadDisabled] = useState(false);
+    
+
+    useEffect(() => {
+        console.log(likedImages)
+    },[likedImages])
+    
 
     const resetSearchInput = () => {
         setSearchInput('')
+    }
+
+    const handleLoad = () => {
+        setIsLoading(false)
+    }
+
+    const handleHoverOn = (event) => {
+        const likedImageBoxWrapper = event.target.closest(".likedImageBoxWrapper")
+        likedImageBoxWrapper.style.setProperty("--toggle-opacity", "1")
+    }
+
+    const handleHoverOff = (event) => {
+        const likedImageBoxWrapper = event.target.closest(".likedImageBoxWrapper")
+        likedImageBoxWrapper.style.setProperty("--toggle-opacity", "0")
     }
 
     const handleLikedImagesBtnHoverOn = (event) => {
@@ -21,8 +48,86 @@ const LikedImages = () => {
         likedImagesHeaderTxtWrapper.style.setProperty("--toggle-icon-color", "#c2c2c2")
     }
 
+    const filterImages = (images) => {
+        if (searchInput.trim() === '') {
+            return images;
+        }
+    
+        const searchTerm = searchInput.trim().toLowerCase();
+        return images.filter((image) =>
+            image.tags.toLowerCase().includes(searchTerm)
+        );
+    };
+
+    useEffect(() => {
+        const storedLikedImages = localStorage.getItem("likedImages");
+        const likedImagesData = storedLikedImages ? JSON.parse(storedLikedImages) : [];
+
+        setLikedImages(likedImagesData);
+        
+        const filteredLikedImages = filterImages(likedImagesData);
+    
+        const col1 = [];
+        const col2 = [];
+        const col3 = [];
+    
+        filteredLikedImages.forEach((image, index) => {
+            if (index % 3 === 0) {
+                col1.push(image);
+            } else if (index % 3 === 1) {
+                col2.push(image);
+            } else {
+                col3.push(image);
+            }
+        });
+    
+        setColumn1Images(col1);
+        setColumn2Images(col2);
+        setColumn3Images(col3);
+        if (filteredLikedImages.length === 0) {
+            setIsLoading(false)
+        }
+    }, [likedImagesArray, searchInput]);
+
+    
+
+    const downLoadImage = async (url) => {
+        if (downloadDisabled) return;
+      
+        setDownloadDisabled(true);
+        setTimeout(() => setDownloadDisabled(false), 3000); // Disable the button for 3 seconds
+      
+        try {
+          const response = await fetch(url);
+          const blob = await response.blob();
+          const fileName = url.split('/').pop().split('.')[0] + '.jpg';
+      
+          const link = document.createElement("a");
+          link.download = fileName;
+          link.href = URL.createObjectURL(blob);
+          link.click();
+          URL.revokeObjectURL(link.href);
+        } catch (error) {
+          console.error("Error downloading image:", error);
+        }
+      };
+
+      const unLikeImage = (image) => {
+        const updatedLikedImages = likedImages.filter(
+            (likedImage) => likedImage.webformatURL !== image.webformatURL
+        );
+        setLikedImages(updatedLikedImages);
+        localStorage.setItem("likedImages", JSON.stringify(updatedLikedImages));
+        getLikedImages(updatedLikedImages)
+    };
+
     return (
         <section className="likedImagesWrapper">
+            {isLoading &&(
+                <div className="loader-wrapper">
+                    <span className="loader"><span className="loader-inner"></span></span>
+                </div>
+            )}
             <header className="likedImagesHeader">
                 <div className="likedImagesContentWrapper">
                     <div className="likedImagesHeaderTxtWrapper"
@@ -47,7 +152,7 @@ const LikedImages = () => {
                         onChange={(event) => setSearchInput(event.target.value)}></input>
                         <div className='likedImgResetSearchInputBtnWrapper'>
                             {searchInput && (
-                                <button className='likedImgResetSearchInputBtn' onClick={resetSearchInput}>
+                                <button type="button" className='likedImgResetSearchInputBtn' onClick={resetSearchInput}>
                                     <svg className='likedImgClearBtn' viewBox="0 0 24 24" version="1.1" aria-hidden="false"><desc lang="en-US">An X shape</desc>
                                     <path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 
                                     13.41 12 19 6.41Z"></path></svg>
@@ -56,13 +161,69 @@ const LikedImages = () => {
                         </div>
                     </form>
                 </div>
-            </header>
+            </header>   
             <div className="renderedLikedImagesWrapper">
                 <div className="renderedLikedImagesContent">
-
-                </div>
-            </div>
-        </section>
+                    <div className="likedImagesResultsColumnContent">
+                            {column1Images.map((image, index) => (
+                                <div className="likedImageBoxWrapper" key={index} onMouseEnter={(event) => handleHoverOn(event)}
+                                onMouseLeave={(event) => handleHoverOff(event)}>
+                                    <img className="likedImage" loading='lazy' src={image.webformatURL} />
+                                    <div className='likedImageBoxBtnWrapper' style={{ opacity: "var(--toggle-opacity)"}}>
+                                        <button className='likedDownLoadBtn'disabled={downloadDisabled} 
+                                        onClick={() => downLoadImage(image.webformatURL)}
+                                        ><img className='likedDownLoadImg' src={download} /></button>
+                                            <button className='likedLikeImgBtn liked' onClick={() => unLikeImage(image)}>
+                                                <img className='likedLikeImg liked' src={like} />
+                                            </button>
+                                    </div>
+                                    <div className='likedImgBoxTagsWrapper' style={{ opacity: "var(--toggle-opacity)"}}>
+                                        <span className='likedImgTagsTxt'>{image.tags}</span>
+                                    </div>
+                                </div>
+                                ))}
+                            </div>
+                            <div className="likedImagesResultsColumnContent">
+                            {column2Images.map((image, index) => (
+                                <div className="likedImageBoxWrapper" key={index} onMouseEnter={(event) => handleHoverOn(event)}
+                                onMouseLeave={(event) => handleHoverOff(event)}>
+                                    <img className="likedImage" loading='lazy' src={image.webformatURL} />
+                                    <div className='likedImageBoxBtnWrapper' style={{ opacity: "var(--toggle-opacity)"}}>
+                                        <button className='likedDownLoadBtn' disabled={downloadDisabled} 
+                                        onClick={() => downLoadImage(image.webformatURL)}
+                                        ><img className='likedDownLoadImg' src={download} /></button>
+                                            <button className='likedLikeImgBtn liked' onClick={() => unLikeImage(image)}>
+                                                <img className='likedLikeImg liked' src={like} />
+                                            </button>
+                                    </div>
+                                    <div className='likedImgBoxTagsWrapper' style={{ opacity: "var(--toggle-opacity)"}}>
+                                        <span className='likedImgTagsTxt'>{image.tags}</span>
+                                    </div>
+                                </div>
+                                ))}
+                            </div>
+                            <div className="likedImagesResultsColumnContent">
+                            {column3Images.map((image, index) => (
+                                <div className="likedImageBoxWrapper" key={index} onMouseEnter={(event) => handleHoverOn(event)}
+                                onMouseLeave={(event) => handleHoverOff(event)}>
+                                    <img className="likedImage" loading='lazy' src={image.webformatURL} onLoad={handleLoad} />
+                                    <div className='likedImageBoxBtnWrapper' style={{ opacity: "var(--toggle-opacity)"}}>
+                                        <button className='likedDownLoadBtn' disabled={downloadDisabled} 
+                                        onClick={() => downLoadImage(image.webformatURL)}>
+                                            <img className='likedDownLoadImg' src={download} /></button>
+                                            <button className='likedLikeImgBtn liked' onClick={() => unLikeImage(image)}>
+                                                <img className='likedLikeImg liked' src={like} />
+                                            </button>
+                                    </div>
+                                    <div className='likedImgBoxTagsWrapper' style={{ opacity: "var(--toggle-opacity)"}}>
+                                        <span className='likedImgTagsTxt'>{image.tags}</span>
+                                    </div>
+                                </div>
+                                ))}
+                            </div>                                    
+                        </div>
+                    </div>
+            </section>
     )
 }
 

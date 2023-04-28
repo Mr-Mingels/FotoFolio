@@ -1,0 +1,151 @@
+.SearchWrapper {
+    min-height: 100vh;
+}
+
+.searchImagesResultsWrapper {
+    padding: 96px 120px;
+}
+
+.searchImagesResultsContent {
+    grid-column-gap: 24px;
+    align-items: start;
+    display: grid;
+    grid-template-columns: repeat(3,minmax(0,1fr));
+}
+
+.searchImagesResultsColumnContent {
+    display: grid;
+    grid-template-columns: minmax(0,1fr);
+    row-gap: 24px;
+}
+
+.searchImageBoxWrapper {
+    max-height: 300px;
+    cursor: pointer;
+    position: relative;
+    --toggle-opacity: 0;
+}
+
+.searchImage {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.searchImageBoxBtnWrapper {
+    transition: all .25s;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 16px;
+    gap: 10px;
+    background: linear-gradient(180deg,rgba(25,27,38,.56),rgba(25,27,38,0));
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    cursor: pointer;
+}
+
+.searchDownLoadBtn, .searchLikeImgBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    border: 1px solid hsla(0,0%,100%,.4);
+    background: hsla(0,0%,100%,.1);
+    color: #fff;
+    text-decoration: none;
+    cursor: pointer;
+    font-size: 20px;
+    transition: all 0.25s;
+}
+
+.searchDownLoadImg, .searchLikeImg {
+    width: 15px;
+    height: 15px;
+}
+
+.searchLikeImgBtn.liked {
+    background-color: green;
+}
+
+.searchLikeImgBtn:hover, .searchDownLoadBtn:hover {
+    border-color: white;
+}
+
+.searchImgBoxTagsWrapper {
+    position: absolute;
+    display: flex;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    padding: 16px;
+    transition: all .25s;
+    background: linear-gradient(180deg,rgba(25,27,38,0),rgba(25,27,38,.56));
+    cursor: pointer;
+}
+
+.searchImgTagsTxt {
+    color: hsla(0,0%,100%,.8);
+    font-size: 14px;
+    font-weight: 400;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
+
+
+
+
+
+
+
+.bottom-loader-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 20px 0;
+}
+
+@keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+.bottom-loader {
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #3498db;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    animation: spin 1s linear infinite;
+}
+
+
+
+.searchNoResultsWrapper {
+    height: 550px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.searchNoResultsTxt-1 {
+    font-size: 46px;
+    font-weight: 700;
+}
+
+.searchNoResultsTxt-2 {
+    font-size: 32px;
+    font-weight: 700;
+}

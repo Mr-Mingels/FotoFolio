@@ -4,17 +4,30 @@ import download from '../assets/download.png'
 import '../styles/Home.css'
 import {  } from "react-router-dom";
 import React, { useEffect, useState, useRef, useCallback } from "react";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 
-const Home = () => {
+const Home = ({ getLikedImages, likedImagesArray }) => {
     const [searchInput, setSearchInput] = useState('')
     const [isLoading, setIsLoading] = useState(true)
     const [loadingMoreImages, setLoadingMoreImages] = useState(false);
     const [page, setPage] = useState(0);
     const [allImages, setAllImages] = useState([[], [], []]);
     const [downloadDisabled, setDownloadDisabled] = useState(false);
-    const [likedImages, setLikedImages] = useState([])
+    const [likedImages, setLikedImages] = useState(() => {
+        const savedLikedImages = localStorage.getItem("likedImages");
+        return savedLikedImages ? JSON.parse(savedLikedImages) : [];
+    });
 
+    const navigate = useNavigate()
+    const location = useLocation()
+
+    const handlePhotoPageNavigation = (imageId) => {
+        navigate(`/photos/${imageId}`);
+    }
+    
+    useEffect(() => {
+        getLikedImages(likedImages)
+    },[likedImages])
 
     const handleHoverOn = (event) => {
         const homeImageBoxWrapper = event.target.closest(".homeImageBoxWrapper")
@@ -32,6 +45,17 @@ const Home = () => {
     const resetSearchInput = () => {
         setSearchInput('')
     }
+
+    const handleSearchSubmit = (e) => {
+        e.preventDefault();
+        navigate(`/search/${searchInput}`);
+    };
+
+    useEffect(() => {
+        if (location.pathname === '/') {
+            setSearchInput('')
+        }
+    },[location])
 
     const handleLoad = () => {
         setIsLoading(false)
@@ -72,6 +96,7 @@ const Home = () => {
             });
         } catch (error) {
           console.error("Error fetching popular images:", error);
+          setIsLoading(false)
         }
       };
       
@@ -79,7 +104,6 @@ const Home = () => {
 
       useEffect(() => {
         if (!loadingMoreImages) {
-            console.log('gigigty goo')
           setLoadingMoreImages(true);
           fetchImages(page);
         }
@@ -122,14 +146,6 @@ const Home = () => {
           };
         }
       }, [loadingMoreImages]);
-      
-      
-      useEffect(() => {
-        console.log(allImages)
-        console.log(allImages[0].length)
-        console.log(allImages[1].length)
-        console.log(allImages[2].length)
-      },[allImages])
 
 
       const downLoadImage = async (url) => {
@@ -153,31 +169,24 @@ const Home = () => {
         }
       };
       
-      const likeImage = (imageUrl) => {
-        setLikedImages([...likedImages, imageUrl])
-      }
-
-      const unLikedImage = (imageUrl) => {
-        setLikedImages((prevLikedImages) => {
-            return prevLikedImages.filter((likedImageUrl) => likedImageUrl !== imageUrl);
-        });
+      const likeImage = (image) => {
+        const updatedLikedImages = [...likedImages, image];
+        setLikedImages(updatedLikedImages);
+        localStorage.setItem("likedImages", JSON.stringify(updatedLikedImages));
     };
-    
+
+    const unLikeImage = (image) => {
+        const updatedLikedImages = likedImages.filter(
+            (likedImage) => likedImage.webformatURL !== image.webformatURL
+        );
+        setLikedImages(updatedLikedImages);
+        localStorage.setItem("likedImages", JSON.stringify(updatedLikedImages));
+    };
       
-      const isImageLiked = useCallback(
-        (imageUrl) => {
-            console.log('checked')
-            if (likedImages.includes(imageUrl)) {
-                console.log('true')
-            }
-          return likedImages.includes(imageUrl);
-        },
-        [likedImages]
-      );
-      
-      useEffect(() => {
-        console.log(likedImages)
-      },[likedImages])
+    const isImageLiked = useCallback((image) => {
+        return likedImages.some(likedImage => likedImage.webformatURL === image.webformatURL);
+    }, [likedImages]);
+
 
     return (
         <section className="homeWrapper">
@@ -194,7 +203,7 @@ const Home = () => {
                         <span>Unleash your creativity with Foto-Folio</span>
                         <span>Experience your memories in a whole new way</span>
                     </div>
-                    <form className="heroImgSearchFormWrapper" onSubmit={(event) => event.preventDefault()}>
+                    <form className="heroImgSearchFormWrapper" onSubmit={(e) => handleSearchSubmit(e)}>
                         <div className="heroImgSearchIconWrapper">
                             <svg className="heroImgSearchIcon" viewBox="0 0 24 24" version="1.1" aria-hidden="false">
                             <desc lang="en-US">A magnifying glass</desc><path d="M16.5 15c.9-1.2 1.5-2.8 1.5-4.5C18 6.4 14.6 3 10.5 
@@ -205,7 +214,7 @@ const Home = () => {
                         onChange={(event) => setSearchInput(event.target.value)}></input>
                         <div className='heroImgResetSearchInputBtnWrapper'>
                             {searchInput && (
-                                <button className='heroImgResetSearchInputBtn' onClick={resetSearchInput}>
+                                <button type="button" className='heroImgResetSearchInputBtn' onClick={resetSearchInput}>
                                     <svg className='heroImgClearBtn' viewBox="0 0 24 24" version="1.1" aria-hidden="false"><desc lang="en-US">An X shape</desc>
                                     <path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 
                                     13.41 12 19 6.41Z"></path></svg>
@@ -224,17 +233,18 @@ const Home = () => {
                             {allImages[0].map((image, index) => (
                                 <div className="homeImageBoxWrapper" key={index} onMouseEnter={(event) => handleHoverOn(event)}
                                 onMouseLeave={(event) => handleHoverOff(event)}>
-                                    <img className="homeImage" src={image.webformatURL} />
+                                    <img className="homeImage" loading='lazy' src={image.webformatURL} 
+                                    onClick={() => handlePhotoPageNavigation(image.id)}/>
                                     <div className='homeImageBoxBtnWrapper' style={{ opacity: "var(--toggle-opacity)"}}>
                                         <button className='homeDownLoadBtn'disabled={downloadDisabled} 
                                         onClick={() => downLoadImage(image.webformatURL)}
                                         ><img className='homeDownLoadImg' src={download} /></button>
-                                        {isImageLiked(image.webformatURL) ? (
-                                            <button className='homeLikeImgBtn liked' onClick={() => unLikedImage(image.webformatURL)}>
+                                        {isImageLiked(image) ? (
+                                            <button className='homeLikeImgBtn liked' onClick={() => unLikeImage(image)}>
                                                 <img className='homeLikeImg liked' src={like} />
                                             </button>
                                         ) : (
-                                            <button className='homeLikeImgBtn' onClick={() => likeImage(image.webformatURL)}>
+                                            <button className='homeLikeImgBtn' onClick={() => likeImage(image)}>
                                                 <img className='homeLikeImg' src={like} />
                                             </button>
                                         )}
@@ -249,17 +259,18 @@ const Home = () => {
                             {allImages[1].map((image, index) => (
                                 <div className="homeImageBoxWrapper" key={index} onMouseEnter={(event) => handleHoverOn(event)}
                                 onMouseLeave={(event) => handleHoverOff(event)}>
-                                    <img className="homeImage" src={image.webformatURL} />
+                                    <img className="homeImage" loading='lazy' src={image.webformatURL} 
+                                    onClick={() => handlePhotoPageNavigation(image.id)}/>
                                     <div className='homeImageBoxBtnWrapper' style={{ opacity: "var(--toggle-opacity)"}}>
                                         <button className='homeDownLoadBtn' disabled={downloadDisabled} 
                                         onClick={() => downLoadImage(image.webformatURL)}
                                         ><img className='homeDownLoadImg' src={download} /></button>
-                                        {isImageLiked(image.webformatURL) ? (
-                                            <button className='homeLikeImgBtn liked' onClick={() => unLikedImage(image.webformatURL)}>
+                                        {isImageLiked(image) ? (
+                                            <button className='homeLikeImgBtn liked' onClick={() => unLikeImage(image)}>
                                                 <img className='homeLikeImg liked' src={like} />
                                             </button>
                                         ) : (
-                                            <button className='homeLikeImgBtn' onClick={() => likeImage(image.webformatURL)}>
+                                            <button className='homeLikeImgBtn' onClick={() => likeImage(image)}>
                                                 <img className='homeLikeImg' src={like} />
                                             </button>
                                         )}
@@ -274,17 +285,18 @@ const Home = () => {
                             {allImages[2].map((image, index) => (
                                 <div className="homeImageBoxWrapper" key={index} onMouseEnter={(event) => handleHoverOn(event)}
                                 onMouseLeave={(event) => handleHoverOff(event)}>
-                                    <img className="homeImage" src={image.webformatURL} />
+                                    <img className="homeImage" loading='lazy' src={image.webformatURL} 
+                                    onClick={() => handlePhotoPageNavigation(image.id)}/>
                                     <div className='homeImageBoxBtnWrapper' style={{ opacity: "var(--toggle-opacity)"}}>
                                         <button className='homeDownLoadBtn' disabled={downloadDisabled} 
                                         onClick={() => downLoadImage(image.webformatURL)}>
                                             <img className='homeDownLoadImg' src={download} /></button>
-                                            {isImageLiked(image.webformatURL) ? (
-                                            <button className='homeLikeImgBtn liked' onClick={() => unLikedImage(image.webformatURL)}>
+                                            {isImageLiked(image) ? (
+                                            <button className='homeLikeImgBtn liked' onClick={() => unLikeImage(image)}>
                                                 <img className='homeLikeImg liked' src={like} />
                                             </button>
                                         ) : (
-                                            <button className='homeLikeImgBtn' onClick={() => likeImage(image.webformatURL)}>
+                                            <button className='homeLikeImgBtn' onClick={() => likeImage(image)}>
                                                 <img className='homeLikeImg' src={like} />
                                             </button>
                                         )}

@@ -55,6 +55,40 @@ app.get('/api/search', async (req, res) => {
 });
 
 
+app.get('/api/image', async (req, res) => {
+  try {
+    const image_id = req.query.id;
+
+    const cacheKey = `image_${image_id}`;
+
+    // If cache exists and is not expired, return cached response
+    if (cache[cacheKey] && (Date.now() - cache[cacheKey].timestamp) < cacheExpiration) {
+      res.json(cache[cacheKey].data);
+      return;
+    }
+
+    const response = await axios.get(PIXABAY_API_BASE_URL, {
+      params: {
+        key: PIXABAY_API_KEY,
+        id: image_id,
+      },
+    });
+
+    // Store response in cache with a timestamp
+    cache[cacheKey] = {
+      data: response.data,
+      timestamp: Date.now(),
+    };
+
+    res.json(response.data);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'An error occurred' });
+  }
+});
+
+
+
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
   console.log(PIXABAY_API_KEY)

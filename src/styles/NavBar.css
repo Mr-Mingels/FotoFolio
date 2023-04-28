@@ -13,6 +13,7 @@
     height: 70px;
     display: flex;
     align-items: center;
+    justify-content: space-between;
 }
 
 .topNavSection {
@@ -62,7 +63,13 @@
     padding-left: 10px;
 }
 
-.bottomNavSectionBtnWrapper, .navLinkWrapper {
+.bottomNavSectionBtnWrapper {
+    display: flex;
+    gap: 24px;
+    
+}
+
+.bottomNavSectionBtn, .navLinkWrapper {
     font-size: 14px;
     color: #767676;
     transition: all .1s ease-in-out;
@@ -70,58 +77,12 @@
     text-decoration: none;
 }
 
+.navLinkTitleWrapper {
+    cursor: pointer;
+    color: black;
+    text-decoration: none;
+}
+
 .bottomNavSectionBtnWrapper:hover, .navLinkWrapper:hover {
     color: black;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-.likedImagesBtnWrapper {
-    margin-left: auto;
-    margin-right: 20px;
-}
-
-.likedImagesBtn {
-    width: fit-content;
-    padding: 5px 10px;
-    background-color: transparent;
-    display: flex;
-    align-items: center;
-    border: none;
-    height: 38px;
-    --toggle-color: #767676;
-    transition: all .1s ease-in-out;
-    font-size: 16px;
-    cursor: pointer;
-}
-
-.likedHeartIconImg {
-    --toggle-icon-color: #c2c2c2;
-    height: 20px;
-    margin-right: 8px;
-    transition: fill .1s ease-in-out;
-    width: 20px;
-}
-*/
