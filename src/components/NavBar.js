@@ -25,13 +25,28 @@ const NavBar = () => {
         navigate(`/search/${searchInput}`);
     };
 
-    useEffect(() => {
-        if (location.pathname === '/') {
-            setSearchInput('')
-        } else {
-            setSearchInput(searchTerm)
+    const safeDecodeURIComponent = (searchTerm) => {
+        try {
+          return decodeURIComponent(searchTerm);
+        } catch (error) {
+          console.warn('Error decoding search term:', error);
+          return searchTerm;
         }
-    },[location])
+      };
+      
+
+      useEffect(() => {
+        if (location.pathname === '/') {
+          setSearchInput('');
+        }
+        if (!searchInput) {
+          const decodedSearchTerm = safeDecodeURIComponent(searchTerm);
+          const cleanedSearchTerm = decodedSearchTerm.replace(/(?<!\d)%\d*(?!\d+)/g, '');
+          setSearchInput(cleanedSearchTerm);
+        }
+      }, [location]);
+      
+
 
     return (
         <nav className="navBarWrapper">

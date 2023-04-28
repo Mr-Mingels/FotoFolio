@@ -5,6 +5,8 @@ import '../styles/Home.css'
 import {  } from "react-router-dom";
 import React, { useEffect, useState, useRef, useCallback } from "react";
 import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import 'react-lazy-load-image-component/src/effects/blur.css';
 
 const Home = ({ getLikedImages, likedImagesArray }) => {
     const [searchInput, setSearchInput] = useState('')
@@ -13,6 +15,7 @@ const Home = ({ getLikedImages, likedImagesArray }) => {
     const [page, setPage] = useState(0);
     const [allImages, setAllImages] = useState([[], [], []]);
     const [downloadDisabled, setDownloadDisabled] = useState(false);
+    const [loadedImageIds, setLoadedImageIds] = useState([]);
     const [likedImages, setLikedImages] = useState(() => {
         const savedLikedImages = localStorage.getItem("likedImages");
         return savedLikedImages ? JSON.parse(savedLikedImages) : [];
@@ -61,6 +64,11 @@ const Home = ({ getLikedImages, likedImagesArray }) => {
         setIsLoading(false)
     }
 
+    const handleImageLoad = (imageId) => {
+        setLoadedImageIds((prevImageIds) => [...prevImageIds, imageId]);
+    };
+    
+
     const fetchImages = async (page) => {
         if(!page || page >= 18) return
         console.log('fetching')
@@ -72,7 +80,8 @@ const Home = ({ getLikedImages, likedImagesArray }) => {
       
           const newImages = data.hits.reduce(
             (columns, image, index) => {
-              columns[index % 3].push(image);
+              const aspectRatio = (image.imageHeight / image.imageWidth) * 100;
+              columns[index % 3].push({ ...image, aspectRatio });
               return columns;
             },
             [[], [], []]
@@ -82,7 +91,7 @@ const Home = ({ getLikedImages, likedImagesArray }) => {
             const combined = [...prev, ...current];
             return combined.filter(
               (image, index, self) =>
-                index === self.findIndex((t) => t.webformatURL === image.webformatURL)
+                index === self.findIndex((t) => t.id === image.id)
             );
           };
 
@@ -177,14 +186,14 @@ const Home = ({ getLikedImages, likedImagesArray }) => {
 
     const unLikeImage = (image) => {
         const updatedLikedImages = likedImages.filter(
-            (likedImage) => likedImage.webformatURL !== image.webformatURL
+            (likedImage) => likedImage.id !== image.id
         );
         setLikedImages(updatedLikedImages);
         localStorage.setItem("likedImages", JSON.stringify(updatedLikedImages));
     };
       
     const isImageLiked = useCallback((image) => {
-        return likedImages.some(likedImage => likedImage.webformatURL === image.webformatURL);
+        return likedImages.some(likedImage => likedImage.id === image.id);
     }, [likedImages]);
 
 
@@ -233,8 +242,18 @@ const Home = ({ getLikedImages, likedImagesArray }) => {
                             {allImages[0].map((image, index) => (
                                 <div className="homeImageBoxWrapper" key={index} onMouseEnter={(event) => handleHoverOn(event)}
                                 onMouseLeave={(event) => handleHoverOff(event)}>
-                                    <img className="homeImage" loading='lazy' src={image.webformatURL} 
-                                    onClick={() => handlePhotoPageNavigation(image.id)}/>
+                                    <div className="homeImageContainer" 
+                                    style={{ paddingBottom: loadedImageIds.includes(image.id) ? '0' : `${image.aspectRatio}%` }}>
+                                        <LazyLoadImage
+                                        className="homeImage"
+                                        src={image.webformatURL}
+                                        onClick={() => handlePhotoPageNavigation(image.id)}
+                                        effect="blur"
+                                        width="100%"
+                                        height="100%"
+                                        afterLoad={() => handleImageLoad(image.id)}
+                                        />
+                                    </div>
                                     <div className='homeImageBoxBtnWrapper' style={{ opacity: "var(--toggle-opacity)"}}>
                                         <button className='homeDownLoadBtn'disabled={downloadDisabled} 
                                         onClick={() => downLoadImage(image.webformatURL)}
@@ -259,8 +278,18 @@ const Home = ({ getLikedImages, likedImagesArray }) => {
                             {allImages[1].map((image, index) => (
                                 <div className="homeImageBoxWrapper" key={index} onMouseEnter={(event) => handleHoverOn(event)}
                                 onMouseLeave={(event) => handleHoverOff(event)}>
-                                    <img className="homeImage" loading='lazy' src={image.webformatURL} 
-                                    onClick={() => handlePhotoPageNavigation(image.id)}/>
+                                    <div className="homeImageContainer"  
+                                    style={{ paddingBottom: loadedImageIds.includes(image.id) ? '0' : `${image.aspectRatio}%` }}>
+                                        <LazyLoadImage
+                                        className="homeImage"
+                                        src={image.webformatURL}
+                                        onClick={() => handlePhotoPageNavigation(image.id)}
+                                        effect="blur"
+                                        width="100%"
+                                        height="100%"
+                                        afterLoad={() => handleImageLoad(image.id)}
+                                        />
+                                    </div>
                                     <div className='homeImageBoxBtnWrapper' style={{ opacity: "var(--toggle-opacity)"}}>
                                         <button className='homeDownLoadBtn' disabled={downloadDisabled} 
                                         onClick={() => downLoadImage(image.webformatURL)}
@@ -285,8 +314,18 @@ const Home = ({ getLikedImages, likedImagesArray }) => {
                             {allImages[2].map((image, index) => (
                                 <div className="homeImageBoxWrapper" key={index} onMouseEnter={(event) => handleHoverOn(event)}
                                 onMouseLeave={(event) => handleHoverOff(event)}>
-                                    <img className="homeImage" loading='lazy' src={image.webformatURL} 
-                                    onClick={() => handlePhotoPageNavigation(image.id)}/>
+                                    <div className="homeImageContainer"  
+                                    style={{ paddingBottom: loadedImageIds.includes(image.id) ? '0' : `${image.aspectRatio}%` }}>
+                                        <LazyLoadImage
+                                        className="homeImage"
+                                        src={image.webformatURL}
+                                        onClick={() => handlePhotoPageNavigation(image.id)}
+                                        effect="blur"
+                                        width="100%"
+                                        height="100%"
+                                        afterLoad={() => handleImageLoad(image.id)}
+                                        />
+                                    </div>
                                     <div className='homeImageBoxBtnWrapper' style={{ opacity: "var(--toggle-opacity)"}}>
                                         <button className='homeDownLoadBtn' disabled={downloadDisabled} 
                                         onClick={() => downLoadImage(image.webformatURL)}>

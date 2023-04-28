@@ -3,7 +3,7 @@ import download from '../assets/download.png'
 import '../styles/Search.css'
 import { useLocation  } from "react-router-dom";
 import React, { useEffect, useState, useRef, useCallback } from "react";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Search = ({ getLikedImages }) => {
     const [isLoading, setIsLoading] = useState(true)
@@ -17,10 +17,16 @@ const Search = ({ getLikedImages }) => {
         return savedLikedImages ? JSON.parse(savedLikedImages) : [];
     });
 
+    const navigate = useNavigate()
+    
     const extractSearchTerm = (location) => {
         const match = location.pathname.match(/\/search\/(.+)/);
         return match ? match[1] : "";
       };
+
+      const handlePhotoPageNavigation = (imageId) => {
+        navigate(`/photos/${imageId}`);
+    }
 
     const location = useLocation();
     const searchTerm = extractSearchTerm(location);
@@ -43,7 +49,9 @@ const Search = ({ getLikedImages }) => {
     const loader = useRef(null);
 
     const handleLoad = () => {
-        setIsLoading(false)
+        setTimeout(() => {
+            setIsLoading(false)
+        }, 1000);
     }
 
     const fetchImages = async (page) => {
@@ -65,7 +73,7 @@ const Search = ({ getLikedImages }) => {
             const combined = [...prev, ...current];
             return combined.filter(
               (image, index, self) =>
-                index === self.findIndex((t) => t.webformatURL === image.webformatURL)
+                index === self.findIndex((t) => t.id === image.id)
             );
           };
 
@@ -168,14 +176,14 @@ const Search = ({ getLikedImages }) => {
 
     const unLikeImage = (image) => {
         const updatedLikedImages = likedImages.filter(
-            (likedImage) => likedImage.webformatURL !== image.webformatURL
+            (likedImage) => likedImage.id !== image.id
         );
         setLikedImages(updatedLikedImages);
         localStorage.setItem("likedImages", JSON.stringify(updatedLikedImages));
     };
       
     const isImageLiked = useCallback((image) => {
-        return likedImages.some(likedImage => likedImage.webformatURL === image.webformatURL);
+        return likedImages.some(likedImage => likedImage.id === image.id);
     }, [likedImages]);
       
       useEffect(() => {
@@ -195,7 +203,8 @@ const Search = ({ getLikedImages }) => {
                             {allImages[0].map((image, index) => (
                                 <div className="searchImageBoxWrapper" key={index} onMouseEnter={(event) => handleHoverOn(event)}
                                 onMouseLeave={(event) => handleHoverOff(event)}>
-                                    <img className="searchImage" loading='lazy' src={image.webformatURL} />
+                                    <img className="searchImage" loading='lazy' src={image.webformatURL}  
+                                    onClick={() => handlePhotoPageNavigation(image.id)}/>
                                     <div className='searchImageBoxBtnWrapper' style={{ opacity: "var(--toggle-opacity)"}}>
                                         <button className='searchDownLoadBtn'disabled={downloadDisabled} 
                                         onClick={() => downLoadImage(image.webformatURL)}
@@ -220,7 +229,8 @@ const Search = ({ getLikedImages }) => {
                             {allImages[1].map((image, index) => (
                                 <div className="searchImageBoxWrapper" key={index} onMouseEnter={(event) => handleHoverOn(event)}
                                 onMouseLeave={(event) => handleHoverOff(event)}>
-                                    <img className="searchImage" loading='lazy' src={image.webformatURL} />
+                                    <img className="searchImage" loading='lazy' src={image.webformatURL}  
+                                    onClick={() => handlePhotoPageNavigation(image.id)}/>
                                     <div className='searchImageBoxBtnWrapper' style={{ opacity: "var(--toggle-opacity)"}}>
                                         <button className='searchDownLoadBtn' disabled={downloadDisabled} 
                                         onClick={() => downLoadImage(image.webformatURL)}
@@ -245,7 +255,8 @@ const Search = ({ getLikedImages }) => {
                             {allImages[2].map((image, index) => (
                                 <div className="searchImageBoxWrapper" key={index} onMouseEnter={(event) => handleHoverOn(event)}
                                 onMouseLeave={(event) => handleHoverOff(event)}>
-                                    <img className="searchImage" loading='lazy' src={image.webformatURL} onLoad={handleLoad}/>
+                                    <img className="searchImage" loading='lazy' src={image.webformatURL} onLoad={handleLoad}  
+                                    onClick={() => handlePhotoPageNavigation(image.id)}/>
                                     <div className='searchImageBoxBtnWrapper' style={{ opacity: "var(--toggle-opacity)"}}>
                                         <button className='searchDownLoadBtn' disabled={downloadDisabled} 
                                         onClick={() => downLoadImage(image.webformatURL)}>

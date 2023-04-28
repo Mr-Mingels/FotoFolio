@@ -61,6 +61,34 @@
     cursor: pointer;
     font-size: 20px;
     transition: all 0.25s;
+    position: relative;
+}
+
+.searchLikeImgBtn:hover::before, .searchLikeImgBtn.liked:hover::before {
+    position: absolute;
+    top: 36px;
+    content: 'Like Image';
+    width: 75px;
+    background-color: #111;
+    border-radius: 8px;
+    padding: 5px;
+    font-size: 12px;
+}
+
+.searchLikeImgBtn.liked:hover::before {
+    content: 'Unlike Image';
+    width: 90px;
+}
+
+.searchDownLoadBtn:hover::before {
+    position: absolute;
+    top: 36px;
+    content: 'Download Image';
+    width: 110px;
+    background-color: #111;
+    border-radius: 8px;
+    padding: 5px;
+    font-size: 12px;
 }
 
 .searchDownLoadImg, .searchLikeImg {

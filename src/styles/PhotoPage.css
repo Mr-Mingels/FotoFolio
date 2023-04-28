@@ -3,10 +3,203 @@
 }
 
 .photoPageResultsWrapper {
-    padding: 96px 120px;
+    padding: 96px 120px 37px 120px;
 }
 
 .photoPageResultsContent {
+    display: flex;
     height: fit-content;
+    max-height: 720px;
     width: 100%;
+    gap: 50px;
+}
+
+.photoPageImageWrapper {
+    display: flex;
+    width: 71.92%;
+    max-width: 71.92%;
+    justify-content: center;
+    position: relative;
+}
+
+.photoPageImage {
+    max-width: 100%;
+    max-height: 720px;
+    object-fit: cover;
+}
+
+.photoPageImgBoxTagsWrapper {
+    transition: all .25s;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 16px;
+    gap: 10px;
+    background: linear-gradient(180deg,rgba(25,27,38,.56),rgba(25,27,38,0));
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.photoPageImgTagsTxt {
+    color: hsla(0,0%,100%,.8);
+    font-size: 14px;
+    font-weight: 400;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.photoPageInfoWrapper {
+    
+}
+
+.photoPageUserInfoWrapper {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    color: #555;
+}
+
+.photoPageUserProfileImgWrapper {
+    position: relative;
+    display: inline-block;
+    width: 48px;
+    height: 48px;
+    border-radius: 48px;
+    margin: 0 12px 0 0;
+}
+
+.photoPageUserProfileImg {
+    object-fit: cover;
+    width: 100%;
+    border-radius: 48px;
+    height: 100%;
+    background-color: white;
+}
+
+.photoPageUserProlfileImgHoverElement {
+    position: absolute;
+    top: 0;
+    display: block;
+    width: 48px;
+    border-radius: 48px;
+    height: 48px;
+    transition: all 0.1s ease-in-out;
+}
+
+.photoPageUserProlfileImgHoverElement:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.photoPageUserNameLink {
+    text-decoration: none;
+    color: #555;
+    transition: all 0.1s ease-in-out;
+}
+
+.photoPageUserNameLink.inImgBox {
+    color: hsla(0,0%,100%,.8);
+}
+
+.photoPageUserNameLink.inImgBox:hover {
+    color: white;
+}
+
+.photoPageUserNameLink:hover {
+    color: #9c9c9c;
+}
+
+.photoPageInfoBtnWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    padding: 24px 0;
+    margin: 32px 0;
+    border-top: 1px solid rgba(83, 83, 83, 0.3);
+    border-bottom: 1px solid rgba(83, 83, 83, 0.3);
+}
+
+.photoPageLikeImageBtn, .photoPageDownLoadImgBtn {
+    padding: 10px 22px;
+    width: 310px;
+    max-width: 310px;
+    border: 0px;
+    border-radius: 50px;
+    background-color: #3498db;
+    border: 1px solid #3498db;
+    color: white;
+    font-size: 15px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+}
+
+.photoPageLikeImageBtn {
+    border: 1px solid rgba(0,0,0,.3);
+    background: rgba(0,0,0,.3);
+}
+
+.photoPageLikeImageBtn.liked {
+    border: 1px solid rgb(0, 166, 0);
+    background: rgb(0, 166, 0);
+}
+
+.photoPageInfoBtnWrapperImg {
+    width: 15px;
+    height: 15px;
+}
+
+.photoPageImgBoxUserInfoWrapper {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    padding: 16px;
+    transition: all .25s;
+    background: linear-gradient(180deg,rgba(25,27,38,0),rgba(25,27,38,.56));
+}
+
+.photoPageRelatedImagesTitle {
+    font-size: 15px;
+    margin: 5px 5px;
+    padding: 5px 15px;
+    color: white;
+    background-color: rgb(32, 32, 32);
+}
+
+.photoPageRelatedImagesWrapper {
+    height: fit-content;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+    width: 310px;
+    gap: 10px;
+}
+
+.photoPageRelatedImageBoxRow {
+    display: flex;
+    justify-content: space-between;
+    height: fit-content;
+}
+
+.photoPageRelatedImageBoxWrapper {
+    margin: 0 5px;
+    cursor: pointer;
+    transition: all 0.1s ease-in-out;
+}
+
+.photoPageRelatedImageBoxWrapper:hover {
+    transform: scale(1.05);
+}
+
+.photoPageRelatedImg {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
 }
