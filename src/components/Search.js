@@ -4,6 +4,8 @@ import '../styles/Search.css'
 import { useLocation  } from "react-router-dom";
 import React, { useEffect, useState, useRef, useCallback } from "react";
 import { Link, useNavigate } from 'react-router-dom';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import 'react-lazy-load-image-component/src/effects/blur.css';
 
 const Search = ({ getLikedImages }) => {
     const [isLoading, setIsLoading] = useState(true)
@@ -12,6 +14,7 @@ const Search = ({ getLikedImages }) => {
     const [allImages, setAllImages] = useState([[], [], []]);
     const [downloadDisabled, setDownloadDisabled] = useState(false);
     const [noResultsFound, setNoResultsFound] = useState(false)
+    const [loadedImageIds, setLoadedImageIds] = useState([]);
     const [likedImages, setLikedImages] = useState(() => {
         const savedLikedImages = localStorage.getItem("likedImages");
         return savedLikedImages ? JSON.parse(savedLikedImages) : [];
@@ -48,11 +51,12 @@ const Search = ({ getLikedImages }) => {
 
     const loader = useRef(null);
 
-    const handleLoad = () => {
+    const handleImageLoad = (imageId) => {
+        setLoadedImageIds((prevImageIds) => [...prevImageIds, imageId]);
         setTimeout(() => {
             setIsLoading(false)
         }, 1000);
-    }
+    };
 
     const fetchImages = async (page) => {
         if(!page || page >= 18) return
@@ -63,7 +67,8 @@ const Search = ({ getLikedImages }) => {
       
           const newImages = data.hits.reduce(
             (columns, image, index) => {
-              columns[index % 3].push(image);
+              const aspectRatio = (image.imageHeight / image.imageWidth) * 100;
+              columns[index % 3].push({ ...image, aspectRatio });
               return columns;
             },
             [[], [], []]
@@ -203,8 +208,17 @@ const Search = ({ getLikedImages }) => {
                             {allImages[0].map((image, index) => (
                                 <div className="searchImageBoxWrapper" key={index} onMouseEnter={(event) => handleHoverOn(event)}
                                 onMouseLeave={(event) => handleHoverOff(event)}>
-                                    <img className="searchImage" loading='lazy' src={image.webformatURL}  
-                                    onClick={() => handlePhotoPageNavigation(image.id)}/>
+                                    <div className="searchImageContainer" 
+                                    style={{ paddingBottom: loadedImageIds.includes(image.id) ? '0' : `${image.aspectRatio}%` }}>
+                                        <img
+                                        className="homeImage"
+                                        src={image.webformatURL}
+                                        onClick={() => handlePhotoPageNavigation(image.id)}
+                                        width="100%"
+                                        height="100%"
+                                        onLoad={() => handleImageLoad(image.id)}
+                                        />
+                                    </div>
                                     <div className='searchImageBoxBtnWrapper' style={{ opacity: "var(--toggle-opacity)"}}>
                                         <button className='searchDownLoadBtn'disabled={downloadDisabled} 
                                         onClick={() => downLoadImage(image.webformatURL)}
@@ -229,8 +243,17 @@ const Search = ({ getLikedImages }) => {
                             {allImages[1].map((image, index) => (
                                 <div className="searchImageBoxWrapper" key={index} onMouseEnter={(event) => handleHoverOn(event)}
                                 onMouseLeave={(event) => handleHoverOff(event)}>
-                                    <img className="searchImage" loading='lazy' src={image.webformatURL}  
-                                    onClick={() => handlePhotoPageNavigation(image.id)}/>
+                                    <div className="searchImageContainer" 
+                                    style={{ paddingBottom: loadedImageIds.includes(image.id) ? '0' : `${image.aspectRatio}%` }}>
+                                        <img
+                                        className="homeImage"
+                                        src={image.webformatURL}
+                                        onClick={() => handlePhotoPageNavigation(image.id)}
+                                        width="100%"
+                                        height="100%"
+                                        onLoad={() => handleImageLoad(image.id)}
+                                        />
+                                    </div>
                                     <div className='searchImageBoxBtnWrapper' style={{ opacity: "var(--toggle-opacity)"}}>
                                         <button className='searchDownLoadBtn' disabled={downloadDisabled} 
                                         onClick={() => downLoadImage(image.webformatURL)}
@@ -255,8 +278,17 @@ const Search = ({ getLikedImages }) => {
                             {allImages[2].map((image, index) => (
                                 <div className="searchImageBoxWrapper" key={index} onMouseEnter={(event) => handleHoverOn(event)}
                                 onMouseLeave={(event) => handleHoverOff(event)}>
-                                    <img className="searchImage" loading='lazy' src={image.webformatURL} onLoad={handleLoad}  
-                                    onClick={() => handlePhotoPageNavigation(image.id)}/>
+                                    <div className="searchImageContainer" 
+                                    style={{ paddingBottom: loadedImageIds.includes(image.id) ? '0' : `${image.aspectRatio}%` }}>
+                                        <img
+                                        className="homeImage"
+                                        src={image.webformatURL}
+                                        onClick={() => handlePhotoPageNavigation(image.id)}
+                                        width="100%"
+                                        height="100%"
+                                        onLoad={() => handleImageLoad(image.id)}
+                                        />
+                                    </div>
                                     <div className='searchImageBoxBtnWrapper' style={{ opacity: "var(--toggle-opacity)"}}>
                                         <button className='searchDownLoadBtn' disabled={downloadDisabled} 
                                         onClick={() => downLoadImage(image.webformatURL)}>

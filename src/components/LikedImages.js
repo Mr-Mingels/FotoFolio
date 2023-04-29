@@ -128,6 +128,34 @@ const LikedImages = ({ likedImagesArray, getLikedImages }) => {
         getLikedImages(updatedLikedImages)
     };
 
+      const getNewImageUrl = async (imageId) => {
+        try {
+          const response = await fetch(`http://localhost:3001/api/image?id=${imageId}`);
+          const data = await response.json();
+      
+          if (data.hits.length > 0) {
+            return data.hits[0].webformatURL;
+          } else {
+            return null;
+          }
+        } catch (error) {
+          console.error("Error fetching new image URL:", error);
+          return null;
+        }
+      };
+
+      const handleImageError = async (event, imageId) => {
+        const newImageUrl = await getNewImageUrl(imageId);
+      
+        if (newImageUrl) {
+          event.target.src = newImageUrl;
+        } else {
+          console.error("Couldn't fetch the new image URL");
+        }
+      };
+      
+      
+
     return (
         <section className="likedImagesWrapper">
             {isLoading &&(
@@ -176,7 +204,8 @@ const LikedImages = ({ likedImagesArray, getLikedImages }) => {
                                 <div className="likedImageBoxWrapper" key={index} onMouseEnter={(event) => handleHoverOn(event)}
                                 onMouseLeave={(event) => handleHoverOff(event)}>
                                     <img className="likedImage" loading='lazy' src={image.webformatURL}  
-                                    onClick={() => handlePhotoPageNavigation(image.id)}/>
+                                    onClick={() => handlePhotoPageNavigation(image.id)} 
+                                    onError={(event) => handleImageError(event, image.id)}/>
                                     <div className='likedImageBoxBtnWrapper' style={{ opacity: "var(--toggle-opacity)"}}>
                                         <button className='likedDownLoadBtn'disabled={downloadDisabled} 
                                         onClick={() => downLoadImage(image.webformatURL)}
@@ -196,7 +225,8 @@ const LikedImages = ({ likedImagesArray, getLikedImages }) => {
                                 <div className="likedImageBoxWrapper" key={index} onMouseEnter={(event) => handleHoverOn(event)}
                                 onMouseLeave={(event) => handleHoverOff(event)}>
                                     <img className="likedImage" loading='lazy' src={image.webformatURL}  
-                                    onClick={() => handlePhotoPageNavigation(image.id)}/>
+                                    onClick={() => handlePhotoPageNavigation(image.id)} 
+                                    onError={(event) => handleImageError(event, image.id)}/>
                                     <div className='likedImageBoxBtnWrapper' style={{ opacity: "var(--toggle-opacity)"}}>
                                         <button className='likedDownLoadBtn' disabled={downloadDisabled} 
                                         onClick={() => downLoadImage(image.webformatURL)}
@@ -216,7 +246,8 @@ const LikedImages = ({ likedImagesArray, getLikedImages }) => {
                                 <div className="likedImageBoxWrapper" key={index} onMouseEnter={(event) => handleHoverOn(event)}
                                 onMouseLeave={(event) => handleHoverOff(event)}>
                                     <img className="likedImage" loading='lazy' src={image.webformatURL} onLoad={handleLoad}  
-                                    onClick={() => handlePhotoPageNavigation(image.id)}/>
+                                    onClick={() => handlePhotoPageNavigation(image.id)}  
+                                    onError={(event) => handleImageError(event, image.id)}/>
                                     <div className='likedImageBoxBtnWrapper' style={{ opacity: "var(--toggle-opacity)"}}>
                                         <button className='likedDownLoadBtn' disabled={downloadDisabled} 
                                         onClick={() => downLoadImage(image.webformatURL)}>

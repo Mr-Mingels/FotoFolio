@@ -48,7 +48,6 @@
 .heroImgSearchFormWrapper {
     border: 1px solid #0000;
     border-radius: 4px;
-    height: 40px;
     background-color: #eee;
     display: flex;
     height: 54px;
@@ -312,19 +311,9 @@
 
 
   @media screen and (min-width: 1536.1px) and (max-width: 100vw) {
-    
-  }
-
-@media (max-width: 1536px) {
     .heroImgTxtContentWrapper {
         padding-left: calc(333px + (100vw - 1536px) / 3);
         padding-right: calc(333px + (100vw - 1536px) / 3);
-    }
-    
-    .heroImgAppTitle {
-    }
-    
-    .smallDescriptionWrapper {
     }
     
     .heroImgSearchFormWrapper {
@@ -335,7 +324,66 @@
         width: calc(4% - (100vw - 1536px) / 75);
     }
     
-    .heroImgSearchIcon {
+    .heroImgSearchInput {
+        width: calc(90% + (100vw - 1536px) / 30);
+    }
+    
+    .heroImgResetSearchInputBtnWrapper {
+        width: calc(6% - (100vw - 1536px) / 50);
+    }
+    
+    .homeImagesResultsWrapper {
+        padding-left: calc(120px + (100vw - 1536px) / 8);
+        padding-right: calc(120px + (100vw - 1536px) / 8);
+    }
+    
+    .homeImageBoxBtnWrapper, .homeImgBoxTagsWrapper {
+        padding: calc(16px + (100vw - 1536px) / 67);
+    }
+    
+    .homeLikeImgBtn, .homeDownLoadBtn {
+        width: calc(32px + (100vw - 1536px) / 150);
+        height: calc(32px + (100vw - 1536px) / 150);
+    }
+    
+    .homeLikeImgBtn:hover::before, .homeLikeImgBtn.liked:hover::before {
+        width: calc(75px + (100vw - 1536px) / 60);
+        top: calc(36px + (100vw - 1536px) / 150);
+        font-size: calc(12px + (100vw - 1536px) / 300);
+    }
+    
+    .homeLikeImgBtn.liked:hover::before {
+        width: calc(90px + (100vw - 1536px) / 60);
+    }
+    
+    .homeDownLoadBtn:hover::before {
+        width: calc(110px + (100vw - 1536px) / 60);
+        top: calc(36px + (100vw - 1536px) / 150);
+        font-size: calc(12px + (100vw - 1536px) / 300);
+    }
+    
+    .homeLikeImg, .homeDownLoadImg {
+        width: calc(15px + (100vw - 1536px) / 150);
+        height: calc(15px + (100vw - 1536px) / 150);
+    }
+    
+    .homeImgTagsTxt {
+        font-size: calc(14px + (100vw - 1536px) / 300);
+    }
+  }
+
+@media (max-width: 1536px) {
+    .heroImgTxtContentWrapper {
+        padding-left: calc(333px + (100vw - 1536px) / 3);
+        padding-right: calc(333px + (100vw - 1536px) / 3);
+    }
+    
+    .heroImgSearchFormWrapper {
+        width: calc(853px + (100vw - 1536px) / 3);
+    }
+    
+    .heroImgSearchIconWrapper {
+        width: calc(4% - (100vw - 1536px) / 75);
     }
     
     .heroImgSearchInput {
@@ -346,71 +394,222 @@
         width: calc(6% - (100vw - 1536px) / 50);
     }
     
-    .heroImgResetSearchInputBtn {
-    }
-    
-    .heroImgResetSearchInputBtn:hover {
-    }
-    
-    .heroImgClearBtn {
-    }
-    
-    .endOfHeroImgWrapper {
-    }
-    
-    .heroImgLink {
-    }
-    
-    .heroImgLink:hover {
-    }
-    
     .homeImagesResultsWrapper {
         padding-left: calc(120px + (100vw - 1536px) / 8);
         padding-right: calc(120px + (100vw - 1536px) / 8);
     }
     
-    .homeImagesResultsContent {
-      }
-    
-    .homeImagesResultsColumnContent {
-    }
-      
-      
-    .homeImageBoxWrapper {
-    }
-      
-    .homeImage {
-    }
-    
-    .homeImageBoxBtnWrapper {
+    .homeImageBoxBtnWrapper, .homeImgBoxTagsWrapper {
+        padding: calc(16px + (100vw - 1536px) / 67);
     }
     
     .homeLikeImgBtn, .homeDownLoadBtn {
+        width: calc(32px + (100vw - 1536px) / 150);
+        height: calc(32px + (100vw - 1536px) / 150);
     }
     
     .homeLikeImgBtn:hover::before, .homeLikeImgBtn.liked:hover::before {
+        width: calc(75px + (100vw - 1536px) / 60);
+        top: calc(36px + (100vw - 1536px) / 150);
+        font-size: calc(12px + (100vw - 1536px) / 300);
     }
     
     .homeLikeImgBtn.liked:hover::before {
+        width: calc(90px + (100vw - 1536px) / 60);
     }
     
     .homeDownLoadBtn:hover::before {
-    }
-    
-    .homeLikeImgBtn.liked {
-        
-    }
-    
-    .homeLikeImgBtn:hover, .homeDownLoadBtn:hover {
-        
+        width: calc(110px + (100vw - 1536px) / 60);
+        top: calc(36px + (100vw - 1536px) / 150);
+        font-size: calc(12px + (100vw - 1536px) / 300);
     }
     
     .homeLikeImg, .homeDownLoadImg {
-    }
-    
-    .homeImgBoxTagsWrapper {
+        width: calc(15px + (100vw - 1536px) / 150);
+        height: calc(15px + (100vw - 1536px) / 150);
     }
     
     .homeImgTagsTxt {
+        font-size: calc(14px + (100vw - 1536px) / 300);
+    }
+  }
+
+
+  
+
+
+  @media (max-width: 800px) {
+    .heroImg, .heroImgWrapper {
+        height: calc(700px + (100vw - 800px) / 3);
+    }
+    .heroImgTxtContentWrapper {
+        height: calc(622px + (100vw - 800px) / 3);
+        padding-left: calc(87px + (100vw - 800px) / 5);
+        padding-right: calc(87px + (100vw - 800px) / 5);
+        align-items: center;
+    }
+
+    .smallDescriptionWrapper {
+        align-items: center;
+    }
+    
+    .heroImgSearchFormWrapper {
+        width: 100%
+    }
+    
+    .heroImgSearchIconWrapper {
+        width: calc(5.5% - (100vw - 800px) / 30);
+    }
+    
+    .heroImgSearchInput {
+        width: calc(86% + (100vw - 800px) / 14);
+    }
+    
+    .heroImgResetSearchInputBtnWrapper {
+        width: calc(8.5% - (100vw - 800px) / 25);
+    }
+    
+    .homeImagesResultsWrapper {
+        padding-left: calc(28px + (100vw - 800px) / 20);
+        padding-right: calc(28px + (100vw - 800px) / 20);
+        padding-top: calc(48px + (100vw - 800px) / 10);
+    }
+
+    .homeImagesResultsContent {
+        grid-column-gap: calc(24px + (100vw - 800px) / 20);
+    }
+
+    .homeImagesResultsColumnContent {
+        row-gap: calc(24px + (100vw - 800px) / 20);
+    }
+    
+    .homeImageBoxBtnWrapper, .homeImgBoxTagsWrapper {
+        padding: calc(11px + (100vw - 800px) / 50);
+    }
+    
+    .homeLikeImgBtn, .homeDownLoadBtn {
+        width: calc(27px + (100vw - 800px) / 50);
+        height: calc(27px + (100vw - 800px) / 50);
+    }
+    
+    .homeLikeImgBtn:hover::before, .homeLikeImgBtn.liked:hover::before, .homeDownLoadBtn:hover::before {
+        width: calc(62.7px + (100vw - 800px) / 60);
+        top: calc(31px + (100vw - 800px) / 50);
+        font-size: calc(9.9px + (100vw - 800px) / 200);
+    }
+    
+    .homeLikeImgBtn.liked:hover::before {
+        width: calc(77.7px + (100vw - 800px) / 25);
+    }
+    
+    .homeDownLoadBtn:hover::before {
+        left: calc(-40px + (100vw - 800px) / -13);
+        width: calc(97.7px + (100vw - 800px) / 20);
+    }
+    
+    .homeLikeImg, .homeDownLoadImg {
+        width: calc(10px + (100vw - 800px) / 100);
+        height: calc(10px + (100vw - 800px) / 100);
+    }
+    
+    .homeImgTagsTxt {
+        font-size: calc(11.5px + (100vw - 800px) / 100);
+    }
+  }
+
+
+
+
+
+
+  @media (max-width: 500px) {
+    .heroImg, .heroImgWrapper {
+        height: calc(600px + (100vw - 500px) / 8);
+    }   
+    .heroImgTxtContentWrapper {
+        height: calc(522px + (100vw - 500px) / 8);
+        padding-left: calc(27px + (100vw - 500px) / 15);
+        padding-right: calc(27px + (100vw - 500px) / 15);
+    }
+
+    .heroImgSearchFormWrapper {
+        height: calc(54px + (100vw - 500px) / 30);
+    }
+
+    .smallDescriptionWrapper {
+        font-size: calc(16px + (100vw - 500px) / 100);
+        text-align: center;
+    }
+    
+    .heroImgSearchIconWrapper {
+        width: calc(7.75% - (100vw - 500px) / 30);
+    }
+
+    .heroImgSearchIcon {
+        padding-left: calc(14px + (100vw - 500px) / 50);
+    }
+    
+    .heroImgSearchInput {
+        font-size: calc(14px + (100vw - 500px) / 90);
+        width: calc(81.05% + (100vw - 500px) / 14);
+        padding-left: calc(10px + (100vw - 500px) / 100);
+    }
+    
+    .heroImgResetSearchInputBtnWrapper {
+        width: calc(11.2% - (100vw - 500px) / 25);
+    }
+
+    .endOfHeroImgWrapper {
+        padding-left: calc(20px + (100vw - 500px) / 28.6957);
+        padding-right: calc(20px + (100vw - 500px) / 28.6957);
+        padding-bottom: calc(20px + (100vw - 500px) / 28.6957);
+    }
+    
+    .homeImagesResultsWrapper {
+        padding-left: calc(48px + (100vw - 500px) / 7);
+        padding-right: calc(48px + (100vw - 500px) / 7);
+        padding-top: calc(48px + (100vw - 500px) / 10);
+    }
+
+    .homeImagesResultsContent {
+        grid-template-columns: 1fr;
+        gap: calc(24px + (100vw - 500px) / 20);
+    }
+
+    .homeImagesResultsColumnContent {
+        row-gap: calc(24px + (100vw - 500px) / 20);
+    }
+    
+    .homeImageBoxBtnWrapper, .homeImgBoxTagsWrapper {
+        padding: calc(16px + (100vw - 500px) / 50);
+    }
+    
+    .homeLikeImgBtn, .homeDownLoadBtn {
+        width: calc(32px + (100vw - 500px) / 50);
+        height: calc(32px + (100vw - 500px) / 50);
+    }
+    
+    .homeLikeImgBtn:hover::before, .homeLikeImgBtn.liked:hover::before, .homeDownLoadBtn:hover::before {
+        width: calc(75px + (100vw - 800px) / 60);
+        top: calc(42px + (100vw - 800px) / 50);
+        font-size: calc(12px + (100vw - 800px) / 200);
+    }
+    
+    .homeLikeImgBtn.liked:hover::before {
+        width: calc(90px + (100vw - 800px) / 60);
+    }
+    
+    .homeDownLoadBtn:hover::before {
+        width: calc(110px + (100vw - 800px) / 60);
+        left: unset;
+    }
+    
+    .homeLikeImg, .homeDownLoadImg {
+        width: calc(15px + (100vw - 500px) / 100);
+        height: calc(15px + (100vw - 500px) / 100);
+    }
+    
+    .homeImgTagsTxt {
+        font-size: calc(14px + (100vw - 500px) / 100);
     }
   }

@@ -66,6 +66,7 @@ const Home = ({ getLikedImages, likedImagesArray }) => {
 
     const handleImageLoad = (imageId) => {
         setLoadedImageIds((prevImageIds) => [...prevImageIds, imageId]);
+        setIsLoading(false)
     };
     
 
@@ -148,7 +149,7 @@ const Home = ({ getLikedImages, likedImagesArray }) => {
             setLoadingMoreImages(false);
             fetchImages(page + 1)
             console.log('set');
-          }, 2500);
+          }, 2000);
       
           return () => {
             clearTimeout(timer);
@@ -244,14 +245,13 @@ const Home = ({ getLikedImages, likedImagesArray }) => {
                                 onMouseLeave={(event) => handleHoverOff(event)}>
                                     <div className="homeImageContainer" 
                                     style={{ paddingBottom: loadedImageIds.includes(image.id) ? '0' : `${image.aspectRatio}%` }}>
-                                        <LazyLoadImage
+                                        <img
                                         className="homeImage"
                                         src={image.webformatURL}
                                         onClick={() => handlePhotoPageNavigation(image.id)}
-                                        effect="blur"
                                         width="100%"
                                         height="100%"
-                                        afterLoad={() => handleImageLoad(image.id)}
+                                        onLoad={() => handleImageLoad(image.id)}
                                         />
                                     </div>
                                     <div className='homeImageBoxBtnWrapper' style={{ opacity: "var(--toggle-opacity)"}}>
@@ -280,14 +280,13 @@ const Home = ({ getLikedImages, likedImagesArray }) => {
                                 onMouseLeave={(event) => handleHoverOff(event)}>
                                     <div className="homeImageContainer"  
                                     style={{ paddingBottom: loadedImageIds.includes(image.id) ? '0' : `${image.aspectRatio}%` }}>
-                                        <LazyLoadImage
+                                        <img
                                         className="homeImage"
                                         src={image.webformatURL}
                                         onClick={() => handlePhotoPageNavigation(image.id)}
-                                        effect="blur"
                                         width="100%"
                                         height="100%"
-                                        afterLoad={() => handleImageLoad(image.id)}
+                                        onLoad={() => handleImageLoad(image.id)}
                                         />
                                     </div>
                                     <div className='homeImageBoxBtnWrapper' style={{ opacity: "var(--toggle-opacity)"}}>
@@ -316,14 +315,13 @@ const Home = ({ getLikedImages, likedImagesArray }) => {
                                 onMouseLeave={(event) => handleHoverOff(event)}>
                                     <div className="homeImageContainer"  
                                     style={{ paddingBottom: loadedImageIds.includes(image.id) ? '0' : `${image.aspectRatio}%` }}>
-                                        <LazyLoadImage
+                                        <img
                                         className="homeImage"
                                         src={image.webformatURL}
                                         onClick={() => handlePhotoPageNavigation(image.id)}
-                                        effect="blur"
                                         width="100%"
                                         height="100%"
-                                        afterLoad={() => handleImageLoad(image.id)}
+                                        onLoad={() => handleImageLoad(image.id)}
                                         />
                                     </div>
                                     <div className='homeImageBoxBtnWrapper' style={{ opacity: "var(--toggle-opacity)"}}>

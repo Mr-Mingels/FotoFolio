@@ -18,7 +18,7 @@ body {
   position: fixed;
   top: 0;
   left: 0;
-  background-color: #2a2a2b;
+  background-color: white;
   display:flex;
   justify-content: center;
   align-items: center;
@@ -29,7 +29,7 @@ body {
   width: 30px;
   height: 30px;
   position: relative;
-  border: 4px solid #Fff;
+  border: 4px solid #3498db;
   animation: loader 2s infinite ease;
   z-index: 100;
 }
@@ -37,7 +37,7 @@ body {
   vertical-align: top;
   display: inline-block;
   width: 100%;
-  background-color: #fff;
+  background-color: #3498db;
   animation: loader-inner 2s infinite ease-in;
   z-index: 100;   
 }
