@@ -198,42 +198,42 @@ const PhotoPage = () => {
                       <h3 className='photoPageRelatedImagesTitle'>Related Images</h3>
                       <div className='photoPageRelatedImagesWrapper'>
                         <div className='photoPageRelatedImageBoxRow'>
-                            <div className='photoPageRelatedImageBoxWrapper' style={{ width: "133px",
-                              height: '100px'}} onClick={() => handlePhotoPageNavigation(relatedImages[0].id)}>
+                            <div className='photoPageRelatedImageBoxWrapper' id='relatedImg1' 
+                            onClick={() => handlePhotoPageNavigation(relatedImages[0].id)}>
                               {relatedImages.length > 0 && relatedImages[0] && (
                                   <img className='photoPageRelatedImg' src={relatedImages[0].webformatURL}/>
                               )}
                               </div>
-                              <div className='photoPageRelatedImageBoxWrapper' style={{ width: "156px",
-                              height: '100px'}} onClick={() => handlePhotoPageNavigation(relatedImages[1].id)}>
+                              <div className='photoPageRelatedImageBoxWrapper' id='relatedImg2' 
+                               onClick={() => handlePhotoPageNavigation(relatedImages[1].id)}>
                               {relatedImages.length > 0 && relatedImages[1] && (
                                   <img className='photoPageRelatedImg' src={relatedImages[1].webformatURL}/>
                               )}
                               </div>
                         </div>
                         <div className='photoPageRelatedImageBoxRow'>
-                            <div className='photoPageRelatedImageBoxWrapper' style={{ width: "152px",
-                              height: '100px'}} onClick={() => handlePhotoPageNavigation(relatedImages[2].id)}>
+                            <div className='photoPageRelatedImageBoxWrapper' id='relatedImg3'
+                             onClick={() => handlePhotoPageNavigation(relatedImages[2].id)}>
                               {relatedImages.length > 0 && relatedImages[2] && (
                                   <img className='photoPageRelatedImg' src={relatedImages[2].webformatURL}/>
                               )}
                               </div>
-                              <div className='photoPageRelatedImageBoxWrapper' style={{ width: "137px",
-                              height: '100px'}} onClick={() => handlePhotoPageNavigation(relatedImages[3].id)}>
+                              <div className='photoPageRelatedImageBoxWrapper' id='relatedImg4'
+                               onClick={() => handlePhotoPageNavigation(relatedImages[3].id)}>
                               {relatedImages.length > 0 && relatedImages[3] && (
                                   <img className='photoPageRelatedImg' src={relatedImages[3].webformatURL}/>
                               )}
                               </div>
                         </div>
                         <div className='photoPageRelatedImageBoxRow'>
-                              <div className='photoPageRelatedImageBoxWrapper' style={{ width: "105px",
-                                height: '100px'}} onClick={() => handlePhotoPageNavigation(relatedImages[4].id)}>
+                              <div className='photoPageRelatedImageBoxWrapper' id='relatedImg5'
+                               onClick={() => handlePhotoPageNavigation(relatedImages[4].id)}>
                                 {relatedImages.length > 0 && relatedImages[4] && (
                                     <img className='photoPageRelatedImg' src={relatedImages[4].webformatURL}/>
                                 )}
                                 </div>
-                                <div className='photoPageRelatedImageBoxWrapper' style={{ width: "184px",
-                                height: '100px'}} onClick={() => handlePhotoPageNavigation(relatedImages[5].id)}>
+                                <div className='photoPageRelatedImageBoxWrapper' id='relatedImg6'
+                                onClick={() => handlePhotoPageNavigation(relatedImages[5].id)}>
                                 {relatedImages.length > 0 && relatedImages[5] && (
                                     <img className='photoPageRelatedImg' src={relatedImages[5].webformatURL}/>
                                 )}
