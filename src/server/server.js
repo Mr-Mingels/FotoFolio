@@ -12,16 +12,6 @@ const app = express();
 app.use(cors({ origin: 'https://foto-folio.vercel.app' }));
 app.use(bodyParser.json())
 
-app.use(express.static(path.join(__dirname, '../../build')));
-
-app.get('*', (req, res, next) => {
-  if (req.path.startsWith('/api')) {
-    return next();
-  }
-
-  res.sendFile(path.join(__dirname, '../../build', 'index.html'));
-});
-
 
 
 
@@ -100,6 +90,15 @@ app.get('/api/image', async (req, res) => {
     console.error(error);
     res.status(500).json({ message: 'An error occurred' });
   }
+});
+
+
+
+
+app.use(express.static(path.join(__dirname, '../../build')));
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../../build', 'index.html'));
 });
 
 
