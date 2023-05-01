@@ -95,13 +95,12 @@ app.get('/api/image', async (req, res) => {
 
 
 
-app.use(express.static(path.resolve(__dirname, '..', '..', 'build')));
+app.use(express.static(path.join(process.cwd(), 'build')));
 
 
 app.get('*', (req, res) => {
-  res.sendFile(path.resolve(__dirname, '..', '..', 'build', 'index.html'));
+  res.sendFile(path.join(process.cwd(), 'build', 'index.html'));
 });
-
 
 
 
