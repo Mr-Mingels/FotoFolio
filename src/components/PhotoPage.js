@@ -3,8 +3,8 @@ import download from '../assets/download.png'
 import profilePicture from '../assets/profilePicture.png'
 import '../styles/PhotoPage.css'
 import {  } from "react-router-dom";
-import React, { useEffect, useState, useRef, useCallback } from "react";
-import { Link, useNavigate, useLocation } from 'react-router-dom';
+import React, { useEffect, useState, useCallback } from "react";
+import { useNavigate, useLocation } from 'react-router-dom';
 
 const PhotoPage = () => {
 

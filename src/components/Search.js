@@ -3,8 +3,7 @@ import download from '../assets/download.png'
 import '../styles/Search.css'
 import { useLocation  } from "react-router-dom";
 import React, { useEffect, useState, useRef, useCallback } from "react";
-import { Link, useNavigate } from 'react-router-dom';
-import { LazyLoadImage } from 'react-lazy-load-image-component';
+import { useNavigate } from 'react-router-dom';
 import 'react-lazy-load-image-component/src/effects/blur.css';
 
 const Search = ({ getLikedImages }) => {

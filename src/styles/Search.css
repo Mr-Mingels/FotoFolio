@@ -283,6 +283,12 @@
     .searchImgTagsTxt {
         font-size: calc(14px + (100vw - 1536px) / 300);
     }
+    .searchNoResultsTxt-1 {
+        font-size: calc(46px + (100vw - 1536px) / 120);
+    }
+    .searchNoResultsTxt-2 {
+        font-size: calc(32px + (100vw - 1536px) / 200);
+    }
   }
 
 
@@ -335,6 +341,12 @@
     
     .searchImgTagsTxt {
         font-size: calc(11.5px + (100vw - 800px) / 100);
+    }
+    .searchNoResultsTxt-1 {
+        font-size: calc(40px + (100vw - 800px) / 100);
+    }
+    .searchNoResultsTxt-2 {
+        font-size: calc(28px + (100vw - 800px) / 50);
     }
   }
 
@@ -390,5 +402,12 @@
     
     .searchImgTagsTxt {
         font-size: calc(14px + (100vw - 500px) / 100);
+    }
+    .searchNoResultsTxt-1 {
+        font-size: calc(32px + (100vw - 800px) / 100);
+    }
+    .searchNoResultsTxt-2 {
+        font-size: calc(24px + (100vw - 800px) / 50);
+        margin-bottom: 144px;
     }
   }

@@ -356,9 +356,6 @@
         width: calc(81% + (100vw - 800px) / 30);
     }
 
-    .likedImgResetSearchInputBtnWrapper {
-    }
-
     .renderedLikedImagesContent {
         grid-column-gap: calc(24px + (100vw - 800px) / 20);
     }

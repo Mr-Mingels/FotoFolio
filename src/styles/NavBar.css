@@ -211,6 +211,7 @@
     border: none;
     color: white;
     background-color: #767676;
+    cursor: pointer;
 }
 
 .navSideBarCloseBtn:hover {

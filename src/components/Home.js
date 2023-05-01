@@ -4,11 +4,10 @@ import download from '../assets/download.png'
 import '../styles/Home.css'
 import {  } from "react-router-dom";
 import React, { useEffect, useState, useRef, useCallback } from "react";
-import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { LazyLoadImage } from 'react-lazy-load-image-component';
+import { useNavigate, useLocation } from 'react-router-dom';
 import 'react-lazy-load-image-component/src/effects/blur.css';
 
-const Home = ({ getLikedImages, likedImagesArray }) => {
+const Home = ({ getLikedImages }) => {
     const [searchInput, setSearchInput] = useState('')
     const [isLoading, setIsLoading] = useState(true)
     const [loadingMoreImages, setLoadingMoreImages] = useState(false);
@@ -234,7 +233,8 @@ const Home = ({ getLikedImages, likedImagesArray }) => {
                     </form>
                 </div>
                 <div className='endOfHeroImgWrapper'>
-                    <span>Photo by <a className='heroImgLink' href='https://unsplash.com/@pinewatt'>Pine Watt</a></span>
+                    <span>Photo by <a className='heroImgLink' target='_blank' rel='noopener noreferrer' 
+                    href='https://unsplash.com/@pinewatt'>Pine Watt</a></span>
                 </div>
             </div>
             <div className="homeImagesResultsWrapper">
