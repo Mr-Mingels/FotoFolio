@@ -10,33 +10,38 @@
         "use": "@vercel/static"
       }
     ],
-    "routes": [
+    "headers": [
       {
-        "src": "/api/(.*)",
-        "dest": "src/server/server.js"
+        "source": "/_next/static/(.*)",
+        "headers": [
+          {
+            "key": "cache-control",
+            "value": "public, max-age=31536000, immutable"
+          }
+        ]
       },
       {
-        "src": "/_next/static/(.*)",
-        "headers": { "cache-control": "public, max-age=31536000, immutable" },
-        "dest": "/_next/static/$1"
-      },
-      {
-        "src": "/static/(.*)",
-        "headers": { "cache-control": "public, max-age=31536000, immutable" },
-        "dest": "/static/$1"
-      },
-      {
-        "src": "/(.*)",
-        "dest": "/build/$1"
+        "source": "/static/(.*)",
+        "headers": [
+          {
+            "key": "cache-control",
+            "value": "public, max-age=31536000, immutable"
+          }
+        ]
       }
     ],
     "rewrites": [
       {
+        "source": "/api/(.*)",
+        "destination": "src/server/server.js"
+      },
+      {
         "source": "/(.*)",
-        "destination": "/build/index.html"
+        "destination": "/build/$1"
       }
     ]
   }
+  
   
   
   
