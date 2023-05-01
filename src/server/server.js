@@ -3,12 +3,23 @@ const axios = require('axios');
 const dotenv = require('dotenv');
 const cors = require('cors');
 const bodyParser = require('body-parser')
+const path = require('path');
+
 
 dotenv.config();
 
 const app = express();
 app.use(cors({ origin: 'http://localhost:3000' }));
 app.use(bodyParser.json())
+
+// Serve static files from the React app
+app.use(express.static(path.join(__dirname, '../build')));
+
+// Handle all other routes to serve the index.html file
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../build', 'index.html'));
+});
+
 
 const PORT = process.env.PORT || 3001;
 
