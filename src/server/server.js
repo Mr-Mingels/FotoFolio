@@ -12,7 +12,8 @@ const app = express();
 app.use(cors({ origin: 'https://foto-folio.vercel.app' }));
 app.use(bodyParser.json())
 
-const root = path.dirname(require.main.filename);
+const root = path.resolve();
+
 
 
 
