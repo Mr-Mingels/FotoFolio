@@ -71,12 +71,9 @@ const Home = ({ getLikedImages }) => {
 
     const fetchImages = async (page) => {
         if(!page || page >= 18) return
-        console.log('fetching')
         try {
           const response = await fetch(`http://localhost:3001/api/search?page=${page}`);
           const data = await response.json();
-
-          console.log(data)
       
           const newImages = data.hits.reduce(
             (columns, image, index) => {
@@ -147,7 +144,6 @@ const Home = ({ getLikedImages }) => {
           const timer = setTimeout(() => {
             setLoadingMoreImages(false);
             fetchImages(page + 1)
-            console.log('set');
           }, 2000);
       
           return () => {

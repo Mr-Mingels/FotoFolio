@@ -59,7 +59,6 @@ const Search = ({ getLikedImages }) => {
 
     const fetchImages = async (page) => {
         if(!page || page >= 18) return
-        console.log('fetching')
         try {
           const response = await fetch(`http://localhost:3001/api/search?page=${page}&q=${searchTerm}`);
           const data = await response.json();
@@ -141,7 +140,6 @@ const Search = ({ getLikedImages }) => {
           const timer = setTimeout(() => {
             setLoadingMoreImages(false);
             fetchImages(page + 1)
-            console.log('set');
           }, 2500);
       
           return () => {
@@ -189,10 +187,6 @@ const Search = ({ getLikedImages }) => {
     const isImageLiked = useCallback((image) => {
         return likedImages.some(likedImage => likedImage.id === image.id);
     }, [likedImages]);
-      
-      useEffect(() => {
-        console.log(likedImages)
-      },[likedImages])
 
     return (
         <section className="SearchWrapper">

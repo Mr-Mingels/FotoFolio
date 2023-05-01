@@ -32,7 +32,6 @@ const PhotoPage = () => {
     const handlePhotoPageNavigation = (imageId) => {
       setIsLoading(true)
       navigate(`/photos/${imageId}`);
-      console.log('clicked')
       setTimeout(() => {
           setIsLoading(false)
       }, 2000);
@@ -62,7 +61,6 @@ const PhotoPage = () => {
       
 
           setImage(data.hits[0]);
-          console.log(image)
         } catch (error) {
           console.error("Error fetching image by ID:", error);
           setIsLoading(false);
@@ -77,7 +75,6 @@ const PhotoPage = () => {
       
 
           setRelatedImages(data.hits);
-          console.log(data.hits)
         } catch (error) {
           console.error("Error fetching image by ID:", error);
           setIsLoading(false);
@@ -86,7 +83,6 @@ const PhotoPage = () => {
 
     useEffect(() => {
         fetchImageById()
-        console.log(image)
     },[location])
 
     useEffect(() => {    
@@ -132,10 +128,6 @@ const PhotoPage = () => {
     const isImageLiked = useCallback((image) => {
         return likedImages.some(likedImage => likedImage.id === image.id);
     }, [likedImages]);
-      
-    useEffect(() => {
-      console.log(likedImages)
-    },[likedImages])
 
     return (
         <div className='photoPageWrapper'>

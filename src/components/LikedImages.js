@@ -15,12 +15,7 @@ const LikedImages = ({ likedImagesArray, getLikedImages }) => {
     const [downloadDisabled, setDownloadDisabled] = useState(false);
     
     const navigate = useNavigate()
-
-    useEffect(() => {
-        console.log(likedImages)
-    },[likedImages])
     
-
     const resetSearchInput = () => {
         setSearchInput('')
     }

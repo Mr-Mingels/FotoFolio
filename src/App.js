@@ -14,7 +14,6 @@ const App = () => {
 
   const getLikedImages = (data) => {
     setLikedImagesArray(data)
-    console.log(data)
   }
 
   return (
@@ -22,7 +21,6 @@ const App = () => {
       <span className="loader"><span className="loader-inner"></span></span>
       </div>}
       >
-        <NavBar />
       <Routes>
           <Route path="/" element={<Home getLikedImages={getLikedImages} likedImagesArray={likedImagesArray}/>} />
           <Route path='/collections' element={<LikedImages getLikedImages={getLikedImages} likedImagesArray={likedImagesArray} />} />
@@ -38,6 +36,7 @@ const Root = () => {
   return (
     <div>
       <BrowserRouter>
+        <NavBar />
         <App />
       </BrowserRouter>
     </div>
