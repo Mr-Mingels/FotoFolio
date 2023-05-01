@@ -22,7 +22,7 @@
         "dest": "/$1.css"
       },
       {
-        "src": "/(.*)",
+        "src": "/([^\\.]+)$",
         "dest": "src/server/server.js"
       }
     ]
