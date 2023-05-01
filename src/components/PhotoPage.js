@@ -56,7 +56,7 @@ const PhotoPage = () => {
 
     const fetchImageById = async () => {
         try {
-          const response = await fetch(`https://foto-folio.herokuapp.com/api/image?id=${searchTerm}`);
+          const response = await fetch(`https://foto-folio.vercel.app/api/image?id=${searchTerm}`);
           const data = await response.json();
       
 
@@ -70,7 +70,7 @@ const PhotoPage = () => {
     const fetchRelatedImages = async () => {
       if (!image) return
         try {
-          const response = await fetch(`https://foto-folio.herokuapp.com/api/search?&q=${image.tags}`);
+          const response = await fetch(`https://foto-folio.vercel.app/api/search?&q=${image.tags}`);
           const data = await response.json();
       
 

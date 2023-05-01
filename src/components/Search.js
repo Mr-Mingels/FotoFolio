@@ -60,7 +60,7 @@ const Search = ({ getLikedImages }) => {
     const fetchImages = async (page) => {
         if(!page || page >= 18) return
         try {
-          const response = await fetch(`https://foto-folio.herokuapp.com/api/search?page=${page}&q=${searchTerm}`);
+          const response = await fetch(`https://foto-folio.vercel.app/api/search?page=${page}&q=${searchTerm}`);
           const data = await response.json();
       
           const newImages = data.hits.reduce(
