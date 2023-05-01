@@ -72,7 +72,7 @@ const Home = ({ getLikedImages }) => {
     const fetchImages = async (page) => {
         if(!page || page >= 18) return
         try {
-          const response = await fetch(`http://localhost:3001/api/search?page=${page}`);
+          const response = await fetch(`https://foto-folio.herokuapp.com/api/search?page=${page}`);
           const data = await response.json();
       
           const newImages = data.hits.reduce(

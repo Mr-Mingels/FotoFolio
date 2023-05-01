@@ -125,7 +125,7 @@ const LikedImages = ({ likedImagesArray, getLikedImages }) => {
 
       const getNewImageUrl = async (imageId) => {
         try {
-          const response = await fetch(`http://localhost:3001/api/image?id=${imageId}`);
+          const response = await fetch(`https://foto-folio.herokuapp.com/api/image?id=${imageId}`);
           const data = await response.json();
       
           if (data.hits.length > 0) {

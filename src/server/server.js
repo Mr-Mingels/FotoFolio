@@ -9,7 +9,7 @@ const path = require('path');
 dotenv.config();
 
 const app = express();
-app.use(cors({ origin: 'http://localhost:3000' }));
+app.use(cors({ origin: 'https://foto-folio.herokuapp.com/' }));
 app.use(bodyParser.json())
 
 app.use(express.static(path.join(__dirname, '../../build')));
