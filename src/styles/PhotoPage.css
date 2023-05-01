@@ -276,8 +276,6 @@
     #relatedImg1, #relatedImg2, #relatedImg3, #relatedImg4, #relatedImg5, #relatedImg6 {
         height: 200px;
     }
-    #relatedImg2 {
-    }
   }
 
 @media (max-width: 500px) {
