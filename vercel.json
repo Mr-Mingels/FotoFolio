@@ -1,31 +1,33 @@
 {
-    "version": 2,
-    "builds": [
-      {
-        "src": "src/server/server.js",
-        "use": "@vercel/node"
-      }
-    ],
-    "routes": [
-      {
-        "src": "/api/(.*)",
-        "dest": "src/server/server.js"
-      },
-      {
-        "src": "/(.*).js",
-        "headers": { "cache-control": "public, max-age=31536000, immutable" },
-        "dest": "/$1.js"
-      },
-      {
-        "src": "/(.*).css",
-        "headers": { "cache-control": "public, max-age=31536000, immutable" },
-        "dest": "/$1.css"
-      },
-      {
-        "src": "/(.*)",
-        "dest": "src/server/server.js"
-      }
-    ]
+  "version": 2,
+  "builds": [
+    {
+      "src": "src/server/server.js",
+      "use": "@vercel/node",
+      "config": { "outputDirectory": "build" }
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "src/server/server.js"
+    },
+    {
+      "src": "/(.*).js",
+      "headers": { "cache-control": "public, max-age=31536000, immutable" },
+      "dest": "/$1.js"
+    },
+    {
+      "src": "/(.*).css",
+      "headers": { "cache-control": "public, max-age=31536000, immutable" },
+      "dest": "/$1.css"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "src/server/server.js"
+    }
+  ]
 }
+
   
   
