@@ -245,8 +245,6 @@ const Home = ({ getLikedImages }) => {
                                         className="homeImage"
                                         src={image.webformatURL}
                                         onClick={() => handlePhotoPageNavigation(image.id)}
-                                        width="100%"
-                                        height="100%"
                                         onLoad={() => handleImageLoad(image.id)}
                                         />
                                     </div>
@@ -280,8 +278,6 @@ const Home = ({ getLikedImages }) => {
                                         className="homeImage"
                                         src={image.webformatURL}
                                         onClick={() => handlePhotoPageNavigation(image.id)}
-                                        width="100%"
-                                        height="100%"
                                         onLoad={() => handleImageLoad(image.id)}
                                         />
                                     </div>
@@ -315,8 +311,6 @@ const Home = ({ getLikedImages }) => {
                                         className="homeImage"
                                         src={image.webformatURL}
                                         onClick={() => handlePhotoPageNavigation(image.id)}
-                                        width="100%"
-                                        height="100%"
                                         onLoad={() => handleImageLoad(image.id)}
                                         />
                                     </div>
