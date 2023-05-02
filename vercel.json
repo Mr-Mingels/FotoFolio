@@ -17,21 +17,26 @@
       "dest": "src/server/server.js"
     },
     {
+      "src": "/static/(.*)",
+      "dest": "/build/static/$1"
+    },
+    {
       "src": "/(.*).js",
       "headers": { "cache-control": "public, max-age=31536000, immutable" },
-      "dest": "/$1.js"
+      "dest": "/build/$1.js"
     },
     {
       "src": "/(.*).css",
       "headers": { "cache-control": "public, max-age=31536000, immutable" },
-      "dest": "/$1.css"
+      "dest": "/build/$1.css"
     },
     {
       "src": "/(.*)",
-      "dest": "/index.html"
+      "dest": "/build/index.html"
     }
   ]
 }
+
 
 
   
