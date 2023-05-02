@@ -88,6 +88,10 @@ const LikedImages = ({ likedImagesArray, getLikedImages }) => {
         setColumn3Images(col3);
         if (filteredLikedImages.length === 0) {
             setIsLoading(false)
+        } else {
+            setTimeout(() => {
+                setIsLoading(false)
+            }, 3000);
         }
     }, [likedImagesArray, searchInput]);
 
