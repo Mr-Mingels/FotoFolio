@@ -3,8 +3,12 @@
   "builds": [
     {
       "src": "src/server/server.js",
-      "use": "@vercel/node",
-      "config": { "outputDirectory": "build" }
+      "use": "@vercel/node"
+    },
+    {
+      "src": "package.json",
+      "use": "@vercel/static-build",
+      "config": { "distDir": "build" }
     }
   ],
   "routes": [
@@ -24,10 +28,11 @@
     },
     {
       "src": "/(.*)",
-      "dest": "src/server/server.js"
+      "dest": "/index.html"
     }
   ]
 }
+
 
   
   
