@@ -42,10 +42,12 @@ const NavBar = () => {
         try {
           return decodeURIComponent(searchTerm);
         } catch (error) {
-          console.warn('Error decoding search term:', error);
-          return searchTerm;
+          console.warn("Error decoding search term:", error);
+          // Replace invalid percent encodings with '%25', which is the URL-encoded form of '%'
+          return searchTerm.replace(/%(?!\d{2}|[89A-Fa-f][0-9A-Fa-f])/g, "%25");
         }
       };
+      
       
 
       useEffect(() => {
@@ -54,8 +56,7 @@ const NavBar = () => {
         }
         if (!searchInput) {
           const decodedSearchTerm = safeDecodeURIComponent(searchTerm);
-          const cleanedSearchTerm = decodedSearchTerm.replace(/(?<!\d)%\d*(?!\d+)/g, '');
-          setSearchInput(cleanedSearchTerm);
+          setSearchInput(decodedSearchTerm);
         }
       }, [location]);
       
