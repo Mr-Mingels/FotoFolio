@@ -80,12 +80,6 @@ const Search = ({ getLikedImages }) => {
             );
           };
 
-          if (data.hits.length === 0) {
-            setIsLoading(false)
-            setNoResultsFound(true)
-          } else {
-            setNoResultsFound(false)
-          }
           setAllImages((prevImages) => {
             return [
                 removeDuplicates(prevImages[0], newImages[0]),
@@ -93,6 +87,12 @@ const Search = ({ getLikedImages }) => {
                 removeDuplicates(prevImages[2], newImages[2]),
             ];
             });
+            if (data.hits.length === 0 && !allImages) {
+                setIsLoading(false)
+                setNoResultsFound(true)
+              } else {
+                setNoResultsFound(false)
+              }
         } catch (error) {
           console.error("Error fetching popular images:", error);
           setIsLoading(false)
