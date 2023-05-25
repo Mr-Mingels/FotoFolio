@@ -89,18 +89,18 @@ const Search = ({ getLikedImages }) => {
             });
             console.log(allImages)
             console.log(data.hits.length)
-            if (data.hits.length === 0 && !allImages[0]) {
+            if (data.hits.length === 0 && allImages[0].length === 0) {
                 console.log('if statement is true')
             } else {
                 console.log('if statement is false')
             }
-            if (data.hits.length === 0 && !allImages[0]) {
+            if (data.hits.length === 0 && allImages[0].length === 0) {
                 setIsLoading(false)
                 setNoResultsFound(true)
               } else {
                 setNoResultsFound(false)
               }
-              console.log(allImages[0])
+              console.log(allImages[0].length)
         } catch (error) {
           console.error("Error fetching popular images:", error);
           setIsLoading(false)
@@ -114,7 +114,7 @@ const Search = ({ getLikedImages }) => {
             console.log('images are not empty')
         }
         console.log(allImages)
-        console.log(allImages[0])
+        console.log(allImages[0].length)
       },[allImages])
       
       useEffect(() => {
