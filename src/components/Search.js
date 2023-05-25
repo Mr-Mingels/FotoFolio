@@ -87,34 +87,17 @@ const Search = ({ getLikedImages }) => {
                 removeDuplicates(prevImages[2], newImages[2]),
             ];
             });
-            console.log(allImages)
-            console.log(data.hits.length)
-            if (data.hits.length === 0 && !allImages) {
-                console.log('if statement is true')
-            } else {
-                console.log('if statement is false')
-            }
-            if (data.hits.length === 0 && !allImages) {
+            if (data.hits.length === 0 && !allImages[0]) {
                 setIsLoading(false)
                 setNoResultsFound(true)
               } else {
                 setNoResultsFound(false)
               }
-              console.log(allImages)
         } catch (error) {
           console.error("Error fetching popular images:", error);
           setIsLoading(false)
         }
       };
-
-      useEffect(() => {
-        if (!allImages) {
-            console.log('images are empty')
-        } else {
-            console.log('images are not empty')
-        }
-        console.log(allImages)
-      },[allImages])
       
       useEffect(() => {
         setAllImages([[], [], []]);
