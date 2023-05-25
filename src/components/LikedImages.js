@@ -65,6 +65,7 @@ const LikedImages = ({ likedImagesArray, getLikedImages }) => {
         const storedLikedImages = localStorage.getItem("likedImages");
         const likedImagesData = storedLikedImages ? JSON.parse(storedLikedImages) : [];
         setLikedImages(likedImagesData);
+        console.log(storedLikedImages)
     }, [likedImagesArray]);
 
     useEffect(() => {
@@ -94,7 +95,7 @@ const LikedImages = ({ likedImagesArray, getLikedImages }) => {
                 setIsLoading(false)
             }, 3000);
         }
-    }, [searchInput, likedImages]);
+    }, [searchInput, likedImagesArray]);
 
     
 
