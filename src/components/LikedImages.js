@@ -13,7 +13,6 @@ const LikedImages = ({ likedImagesArray, getLikedImages }) => {
     const [column2Images, setColumn2Images] = useState([]);
     const [column3Images, setColumn3Images] = useState([]);
     const [downloadDisabled, setDownloadDisabled] = useState(false);
-    const [filteredImages, setFilteredImages] = useState([]);
     
     const navigate = useNavigate()
     
@@ -63,15 +62,19 @@ const LikedImages = ({ likedImagesArray, getLikedImages }) => {
     };
 
     useEffect(() => {
-        setFilteredImages(filterImages(likedImages));
-    }, [searchInput, likedImages]);
+        const storedLikedImages = localStorage.getItem("likedImages");
+        const likedImagesData = storedLikedImages ? JSON.parse(storedLikedImages) : [];
+        setLikedImages(likedImagesData);
+    }, [likedImagesArray]);
 
     useEffect(() => {
+        const filteredLikedImages = filterImages(likedImages);
+    
         const col1 = [];
         const col2 = [];
         const col3 = [];
     
-        filteredImages.forEach((image, index) => {
+        filteredLikedImages.forEach((image, index) => {
             if (index % 3 === 0) {
                 col1.push(image);
             } else if (index % 3 === 1) {
@@ -84,14 +87,14 @@ const LikedImages = ({ likedImagesArray, getLikedImages }) => {
         setColumn1Images(col1);
         setColumn2Images(col2);
         setColumn3Images(col3);
-        if (filteredImages.length === 0) {
+        if (filteredLikedImages.length === 0) {
             setIsLoading(false)
         } else {
             setTimeout(() => {
                 setIsLoading(false)
             }, 3000);
         }
-    }, [likedImagesArray, filteredImages]);
+    }, [searchInput, likedImages]);
 
     
 
