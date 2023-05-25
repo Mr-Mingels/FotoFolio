@@ -99,9 +99,10 @@ app.get('/api/image', async (req, res) => {
 
 app.use(express.static(path.join(root, '../build')));
 
-app.get('*', (req, res) => {
+app.all('*', (req, res) => {
   res.sendFile(path.join(root, '../build', 'index.html'));
 });
+
 
 
 
