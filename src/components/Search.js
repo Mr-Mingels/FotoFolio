@@ -88,6 +88,12 @@ const Search = ({ getLikedImages }) => {
             ];
             });
             console.log(allImages)
+            console.log(data.hits.length)
+            if (data.hits.length === 0 && !allImages) {
+                console.log('if statement is true')
+            } else {
+                console.log('if statement is false')
+            }
             if (data.hits.length === 0 && !allImages) {
                 setIsLoading(false)
                 setNoResultsFound(true)
@@ -102,6 +108,11 @@ const Search = ({ getLikedImages }) => {
       };
 
       useEffect(() => {
+        if (!allImages) {
+            console.log('images are empty')
+        } else {
+            console.log('images are not empty')
+        }
         console.log(allImages)
       },[allImages])
       
