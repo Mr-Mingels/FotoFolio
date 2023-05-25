@@ -87,17 +87,23 @@ const Search = ({ getLikedImages }) => {
                 removeDuplicates(prevImages[2], newImages[2]),
             ];
             });
+            console.log(allImages)
             if (data.hits.length === 0 && !allImages) {
                 setIsLoading(false)
                 setNoResultsFound(true)
               } else {
                 setNoResultsFound(false)
               }
+              console.log(allImages)
         } catch (error) {
           console.error("Error fetching popular images:", error);
           setIsLoading(false)
         }
       };
+
+      useEffect(() => {
+        console.log(allImages)
+      },[allImages])
       
       useEffect(() => {
         setAllImages([[], [], []]);
