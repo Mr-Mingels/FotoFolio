@@ -93,7 +93,7 @@ const LikedImages = ({ likedImagesArray, getLikedImages }) => {
                 setIsLoading(false)
             }, 3000);
         }
-    }, [likedImagesArray, searchInput]);
+    }, [likedImagesArray, searchInput, likedImages]);
 
     
 
