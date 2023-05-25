@@ -13,6 +13,7 @@ const LikedImages = ({ likedImagesArray, getLikedImages }) => {
     const [column2Images, setColumn2Images] = useState([]);
     const [column3Images, setColumn3Images] = useState([]);
     const [downloadDisabled, setDownloadDisabled] = useState(false);
+    const [imageUrl, setImageUrl] = useState();
     
     const navigate = useNavigate()
     
@@ -64,12 +65,10 @@ const LikedImages = ({ likedImagesArray, getLikedImages }) => {
     useEffect(() => {
         const storedLikedImages = localStorage.getItem("likedImages");
         const likedImagesData = storedLikedImages ? JSON.parse(storedLikedImages) : [];
-        setLikedImages(likedImagesData);
-        console.log(storedLikedImages)
-    }, [likedImagesArray]);
 
-    useEffect(() => {
-        const filteredLikedImages = filterImages(likedImages);
+        setLikedImages(likedImagesData);
+        
+        const filteredLikedImages = filterImages(likedImagesData);
     
         const col1 = [];
         const col2 = [];
@@ -95,7 +94,7 @@ const LikedImages = ({ likedImagesArray, getLikedImages }) => {
                 setIsLoading(false)
             }, 3000);
         }
-    }, [searchInput, likedImagesArray]);
+    }, [likedImagesArray, searchInput]);
 
     
 
@@ -149,7 +148,7 @@ const LikedImages = ({ likedImagesArray, getLikedImages }) => {
         const newImageUrl = await getNewImageUrl(imageId);
       
         if (newImageUrl) {
-          event.target.src = newImageUrl;
+            setImageUrl(newImageUrl)
         } else {
           console.error("Couldn't fetch the new image URL");
         }
@@ -204,7 +203,7 @@ const LikedImages = ({ likedImagesArray, getLikedImages }) => {
                             {column1Images.map((image, index) => (
                                 <div className="likedImageBoxWrapper" key={index} onMouseEnter={(event) => handleHoverOn(event)}
                                 onMouseLeave={(event) => handleHoverOff(event)}>
-                                    <img className="likedImage" loading='lazy' src={image.webformatURL}  
+                                    <img className="likedImage" loading='lazy' src={imageUrl ? imageUrl : image.webformatURL}  
                                     onClick={() => handlePhotoPageNavigation(image.id)} 
                                     onError={(event) => handleImageError(event, image.id)}/>
                                     <div className='likedImageBoxBtnWrapper' style={{ opacity: "var(--toggle-opacity)"}}>
@@ -225,7 +224,7 @@ const LikedImages = ({ likedImagesArray, getLikedImages }) => {
                             {column2Images.map((image, index) => (
                                 <div className="likedImageBoxWrapper" key={index} onMouseEnter={(event) => handleHoverOn(event)}
                                 onMouseLeave={(event) => handleHoverOff(event)}>
-                                    <img className="likedImage" loading='lazy' src={image.webformatURL}  
+                                    <img className="likedImage" loading='lazy' src={imageUrl ? imageUrl : image.webformatURL}  
                                     onClick={() => handlePhotoPageNavigation(image.id)} 
                                     onError={(event) => handleImageError(event, image.id)}/>
                                     <div className='likedImageBoxBtnWrapper' style={{ opacity: "var(--toggle-opacity)"}}>
@@ -246,7 +245,7 @@ const LikedImages = ({ likedImagesArray, getLikedImages }) => {
                             {column3Images.map((image, index) => (
                                 <div className="likedImageBoxWrapper" key={index} onMouseEnter={(event) => handleHoverOn(event)}
                                 onMouseLeave={(event) => handleHoverOff(event)}>
-                                    <img className="likedImage" loading='lazy' src={image.webformatURL} onLoad={handleLoad}  
+                                    <img className="likedImage" loading='lazy' src={imageUrl ? imageUrl : image.webformatURL} onLoad={handleLoad}  
                                     onClick={() => handlePhotoPageNavigation(image.id)}  
                                     onError={(event) => handleImageError(event, image.id)}/>
                                     <div className='likedImageBoxBtnWrapper' style={{ opacity: "var(--toggle-opacity)"}}>
