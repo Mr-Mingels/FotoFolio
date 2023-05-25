@@ -100,7 +100,7 @@ const Search = ({ getLikedImages }) => {
               } else {
                 setNoResultsFound(false)
               }
-              console.log(allImages)
+              console.log(allImages[0])
         } catch (error) {
           console.error("Error fetching popular images:", error);
           setIsLoading(false)
@@ -114,6 +114,7 @@ const Search = ({ getLikedImages }) => {
             console.log('images are not empty')
         }
         console.log(allImages)
+        console.log(allImages[0])
       },[allImages])
       
       useEffect(() => {
