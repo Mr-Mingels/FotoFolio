@@ -39,7 +39,9 @@ Credit: Pixabay API
 
 - Express js
 
-- CSS3
+- JavaScript (ES6+)
+
+- HTML/CSS
 
 ### **Key Concepts:**
 
