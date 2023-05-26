@@ -1,6 +1,6 @@
-### [FotoFolio](https://foto-folio.vercel.app/)
+### **[FotoFolio](https://foto-folio.vercel.app/)**
 
-## Project Introduction:
+## **Project Introduction:**
 
 FotoFolio is a powerful and visually engaging full-stack photo gallery application, carefully designed and developed as a showcase piece for my portfolio. 
 
@@ -9,7 +9,7 @@ With FotoFolio, users can effortlessly navigate through an expansive database of
 The application was built keeping in mind the needs and desires of a modern-day user. It provides an infinite scroll experience for seamless browsing, and detailed views of each image with a simple click. Notably, it also features an asynchronous image loading system with clear loading statuses to enhance the user experience. The gallery layout is responsive, optimizing its display based on user screen size, ensuring a consistent and pleasant browsing experience on any device.
 
 
-## About The Project:
+## **About The Project:**
 
 ![An image of the home screen of the FotoFolio application](./public/images/fotoFolioScreenShot.png)
 
@@ -31,7 +31,7 @@ I'm using the [Pixabay API](https://pixabay.com/api/docs/) to get high quality i
 Credit: Pixabay API
 
 
-### Built With:
+### **Built With:**
 
 - React.js
 
@@ -41,7 +41,7 @@ Credit: Pixabay API
 
 - CSS3
 
-### Key Concepts:
+### **Key Concepts:**
 
 - Cors
 
