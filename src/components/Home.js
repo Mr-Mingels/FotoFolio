@@ -2,7 +2,6 @@ import heroImg from '../assets/heroImg.jpg'
 import like from '../assets/like.png'
 import download from '../assets/download.png'
 import '../styles/Home.css'
-import {  } from "react-router-dom";
 import React, { useEffect, useState, useRef, useCallback } from "react";
 import { useNavigate, useLocation } from 'react-router-dom';
 import 'react-lazy-load-image-component/src/effects/blur.css';

@@ -1,70 +1,58 @@
-# Getting Started with Create React App
+Project Introduction:
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+FotoFolio is a powerful and visually engaging full-stack photo gallery application, carefully designed and developed as a showcase piece for my portfolio. 
 
-## Available Scripts
+With FotoFolio, users can effortlessly navigate through an expansive database of high-quality images sourced from the Pixabay API. The application offers a rich suite of features such as the ability to search for specific images, download high-resolution photos directly, and 'like' favorite images for future viewing. This personalized 'liked images' collection persists across sessions using local storage, creating a tailored user experience.
 
-In the project directory, you can run:
+The application was built keeping in mind the needs and desires of a modern-day user. It provides an infinite scroll experience for seamless browsing, and detailed views of each image with a simple click. Notably, it also features an asynchronous image loading system with clear loading statuses to enhance the user experience. The gallery layout is responsive, optimizing its display based on user screen size, ensuring a consistent and pleasant browsing experience on any device.
 
-### `npm start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+About The Project:
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+![An image of the home screen of the FotoFolio application](./public/images/fotoFolioScreenShot.png)
 
-### `npm test`
+FotoFolio is a full stack photo gallery website
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `npm run build`
+The common functionalities are:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- Users can search for high-quality images based on their desired search term
+- Users can download high-resolution images directly from the application
+- Allows users to 'like' their favorite images, storing these images in a 'liked images' collection for future viewing. This collection persists in local storage
+- The application provides a seamless scrolling experience, fetching more images as the user scrolls down the page, providing an infinite scroll experience
+- By clicking on an image, users can access a detailed view of the selected image.
+- Images are loaded asynchronously, with loading status indicated to the user, enhancing the user experience
+- The image gallery layout is responsive, dynamically adjusting to optimize the viewing experience based on the number of images and the user's screen size
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+I'm using the [Pixabay API](https://pixabay.com/api/docs/){:target="_blank"} to get high quality images
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Credit: Pixabay API
 
-### `npm run eject`
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+Built With:
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- React.js
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+- Node.js
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+- Express js
 
-## Learn More
+- CSS3
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Key Concepts:
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- Cors
 
-### Code Splitting
+- Local Storage
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+- Axios
 
-### Analyzing the Bundle Size
+- Path
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+- Responsive Web Design
 
-### Making a Progressive Web App
+- API Consumption
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+- Component-based Architecture
 
-### Advanced Configuration
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
